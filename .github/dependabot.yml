@@ -1,11 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: /
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: daily
-      time: 18:00
+      interval: "daily"
+      time: "18:00"
     labels:
-      - dependencies
+      - "dependencies"
     reviewers:
-      - WithoutAName25
+      - "WithoutAName25"
