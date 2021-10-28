@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { dependencies } from './package.json';
 
 const manualVendorChunks: {[k: string]: string[]} = {
-  vendor: ['vue']
+  vue: ["vue", "vue-router"]
 }
 
 function renderChunks(deps: Record<string, string>) {

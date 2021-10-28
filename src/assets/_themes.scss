@@ -1,0 +1,38 @@
+@mixin theme-dark {
+  --color-bg: #222;
+  --color-text: #eee;
+  img {
+    filter: brightness(.8) contrast(1.2);
+  }
+}
+
+@mixin theme-light {
+  --color-bg: #fff;
+  --color-text: #222;
+}
+
+@mixin apply-theme {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+body {
+  @include theme-dark;
+  @include apply-theme;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    @include theme-light;
+  }
+}
+
+.theme-light {
+  @include theme-light;
+  @include apply-theme;
+}
+
+.theme-dark {
+  @include theme-dark;
+  @include apply-theme;
+}
