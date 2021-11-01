@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import Navigation from './components/Navigation.vue'
+import Navigation from './components/navigation/Navigation.vue'
 </script>
 
 <template>
-  <Navigation />
-  <router-view />
+  <header>
+    <Navigation/>
+  </header>
+  <main>
+    <router-view/>
+  </main>
 </template>
 
 <style lang="scss">
@@ -17,5 +21,9 @@ body {
   text-align: center;
   margin: 0;
   overflow-x: hidden;
+}
+
+main {
+  margin: 10px;
 }
 </style>
