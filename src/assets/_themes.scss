@@ -1,14 +1,36 @@
-@mixin theme-dark {
-  --color-bg: #222;
+@mixin colors {
+  --color-text-light: #eee;
+}
+
+@mixin colors-dark {
+  --color-accent: #9615db;
+  --color-bg: #2d3032;
+  --color-bg-1: #555759;
+  --color-bg-2: #7d7f80;
+  --color-bg-sel: #d2d3d3;
   --color-text: #eee;
+  --color-text-sel: #2d3032;
+}
+
+@mixin colors-light {
+  --color-accent: #b444ff;
+  --color-bg: #eee;
+  --color-bg-1: #ddd;
+  --color-bg-2: #ccc;
+  --color-bg-sel: #555;
+  --color-text: #222;
+  --color-text-sel: #eee;
+}
+
+@mixin theme-dark {
+  @include colors-dark;
   img {
     filter: brightness(.8) contrast(1.2);
   }
 }
 
 @mixin theme-light {
-  --color-bg: #fff;
-  --color-text: #222;
+  @include colors-light;
 }
 
 @mixin apply-theme {
@@ -17,6 +39,7 @@
 }
 
 body {
+  @include colors;
   @include theme-dark;
   @include apply-theme;
 }

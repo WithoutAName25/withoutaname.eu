@@ -11,6 +11,16 @@ import Navigation from './components/navigation/Navigation.vue'
   </main>
 </template>
 
+<script lang="ts">
+export default {
+  watch: {
+    '$route' (to: any) {
+      document.title = to.meta.title ? to.meta.title + " - WithoutAName" : "WithoutAName"
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 @use "assets/themes";
 

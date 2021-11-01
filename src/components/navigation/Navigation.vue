@@ -21,7 +21,7 @@ const toggleActive = () => isActive.value = !isActive.value;
 
 <style scoped lang="scss">
 nav {
-  background-color: #333;
+  background-color: var(--color-bg-1);
   overflow: hidden;
 }
 
@@ -29,20 +29,20 @@ nav {
   .items :deep(a) {
     float: left;
     display: block;
-    color: #f2f2f2;
+    color: var(--color-text);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
 
     &:hover {
-      background-color: #ddd;
-      color: black;
+      background-color: var(--color-bg-sel);
+      color: var(--color-text-sel);
     }
 
     &.router-link-active {
-      background-color: #0088ff;
-      color: white;
+      background-color: var(--color-accent);
+      color: var(--color-text);
     }
   }
 
@@ -60,7 +60,7 @@ nav {
     left: 0;
     top: 0;
     background-color: #000;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.8);
     overflow-x: hidden;
     transition: 0.5s;
 
@@ -72,7 +72,7 @@ nav {
       padding: 8px;
       text-decoration: none;
       font-size: 36px;
-      color: #f2f2f2;
+      color: var(--color-text-light);
       display: block;
     }
 
@@ -95,7 +95,7 @@ nav {
     .bar {
       width: 35px;
       height: 5px;
-      background-color: #f2f2f2;
+      background-color: var(--color-text);
       margin: 6px;
       transition: 0.5s;
     }
