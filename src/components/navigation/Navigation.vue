@@ -62,7 +62,7 @@ nav {
     @include links;
 
     &.router-link-active {
-      background-color: var(--color-accent);
+      background-color: var(--color-accent-1);
       color: var(--color-text);
     }
   }
