@@ -9,27 +9,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16.x
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
 
-    - name: Build
-      run: |
-        npm install
-        npm run build
+      - name: Build
+        run: |
+          npm install
+          npm run build
 
-    - name: Deploy files
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
-      env:
-        INPUT_SERVER: ${{ secrets.FTB_SERVER }}
-      with:
-#        server: ${{ secrets.FTB_SERVER }}
-        username: ${{ secrets.FTB_USER }}
-        password: ${{ secrets.FTB_PASSWORD }}
-        protocol: ftps
-        local-dir: ./dist/
-        server-dir: /var/www/withoutaname/
+      - name: Deploy files
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: /var/www/withoutaname/
