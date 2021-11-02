@@ -24,8 +24,10 @@ jobs:
 
     - name: Deploy files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      env:
+        INPUT_SERVER: ${{ secrets.FTB_SERVER }}
       with:
-        server: localhost
+#        server: ${{ secrets.FTB_SERVER }}
         username: ${{ secrets.FTB_USER }}
         password: ${{ secrets.FTB_PASSWORD }}
         protocol: ftps
