@@ -22,7 +22,7 @@ const toggleActive = () => isActive.value = !isActive.value;
       <NavItems/>
     </div>
     <div class="shortcuts-right">
-      <a @click="this.$emit('toggleTheme')"><FAIcon name="circle-half-stroke"/></a>
+      <a @click="$emit('toggleTheme')"><FAIcon name="circle-half-stroke"/></a>
     </div>
   </nav>
 </template>
