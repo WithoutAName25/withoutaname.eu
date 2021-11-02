@@ -23,11 +23,10 @@ jobs:
           npm run build
 
       - name: Deploy files
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: sand4rt/ftp-deployer@v1.3
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: /var/www/withoutaname/
+          sftp: true
+          remote_folder: /var/www/withoutaname/
