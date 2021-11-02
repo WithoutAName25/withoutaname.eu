@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import NavItems from "./NavItems.vue";
 import { ref } from "vue";
+import FAIcon from "../FAIcon.vue";
+import NavItem from "./NavItem.vue";
 
 const isActive = ref(false);
 const toggleActive = () => isActive.value = !isActive.value;
@@ -8,14 +10,20 @@ const toggleActive = () => isActive.value = !isActive.value;
 
 <template>
   <nav>
-    <div class="menu" :class="{ active: isActive}">
-      <NavItems/>
-    </div>
-    <a class="icon" :class="{ active: isActive}" @click="toggleActive()">
+    <a class="icon only-portrait" :class="{ active: isActive }" @click="toggleActive()">
       <div class="bar bar1"></div>
       <div class="bar bar2"></div>
       <div class="bar bar3"></div>
     </a>
+    <div class="shortcuts only-portrait">
+      <NavItem href="/"><FAIcon name="house"/></NavItem>
+    </div>
+    <div class="menu" :class="{ active: isActive }">
+      <NavItems/>
+    </div>
+    <div class="shortcuts-right">
+      <a @click="this.$emit('toggleTheme')"><FAIcon name="circle-half-stroke"/></a>
+    </div>
   </nav>
 </template>
 
@@ -25,20 +33,33 @@ nav {
   overflow: hidden;
 }
 
+@mixin links {
+  float: left;
+  display: block;
+  color: var(--color-text);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+
+  &:hover {
+    background-color: var(--color-bg-sel);
+    color: var(--color-text-sel);
+  }
+}
+
+.shortcuts a {
+  @include links;
+}
+
+.shortcuts-right a {
+  @include links;
+  float: right;
+}
+
 @media screen and (orientation: landscape) {
   .items :deep(a) {
-    float: left;
-    display: block;
-    color: var(--color-text);
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-
-    &:hover {
-      background-color: var(--color-bg-sel);
-      color: var(--color-text-sel);
-    }
+    @include links;
 
     &.router-link-active {
       background-color: var(--color-accent);
@@ -86,8 +107,9 @@ nav {
   }
 
   .icon {
+    float: left;
     position: relative;
-    display: inline-block;
+    display: block;
     cursor: pointer;
     z-index: 2;
     margin: 5px;

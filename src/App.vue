@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import Navigation from './components/navigation/Navigation.vue'
+import Navigation from './components/navigation/Navigation.vue';
+
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+const toggleTheme = () => {
+  document.body.classList.toggle(prefersDark ? "theme-light" : "theme-dark");
+}
 </script>
 
 <template>
   <header>
-    <Navigation/>
+    <Navigation @toggleTheme="toggleTheme()"/>
   </header>
   <main>
     <router-view/>
@@ -35,5 +40,17 @@ body {
 
 main {
   margin: 10px;
+}
+
+@media screen and (orientation: landscape) {
+  .only-portrait {
+    display: none;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .only-landscape {
+    display: none;
+  }
 }
 </style>
