@@ -3,7 +3,7 @@ import Navigation from './components/navigation/Navigation.vue';
 
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 const toggleTheme = () => {
-  document.body.classList.toggle(prefersDark ? "theme-light" : "theme-dark");
+  document.body.classList.toggle(prefersDark.matches ? "theme-light" : "theme-dark");
 }
 </script>
 
