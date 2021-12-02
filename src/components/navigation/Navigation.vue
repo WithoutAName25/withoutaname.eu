@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import NavItems from "./NavItems.vue";
 import { ref } from "vue";
-import FAIcon from "../FAIcon.vue";
 import NavItem from "./NavItem.vue";
 
 const isActive = ref(false);
@@ -16,13 +15,14 @@ const toggleActive = () => isActive.value = !isActive.value;
       <div class="bar bar3"></div>
     </a>
     <div class="shortcuts only-portrait">
-      <NavItem href="/"><FAIcon name="house"/></NavItem>
+      <NavItem href="/"><FontAwesomeIcon icon="house"/></NavItem>
     </div>
     <div class="menu" :class="{ active: isActive }">
       <NavItems/>
     </div>
     <div class="shortcuts-right">
-      <a @click="$emit('toggleTheme')"><FAIcon name="circle-half-stroke"/></a>
+      <a @click="$emit('toggleTheme')"><FontAwesomeIcon icon="circle-half-stroke"/></a>
+      <a href="https://github.com/WithoutAName25/withoutaname.eu"><FontAwesomeIcon :icon="['fab', 'github']"/></a>
     </div>
   </nav>
 </template>
