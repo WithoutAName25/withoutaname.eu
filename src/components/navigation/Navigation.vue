@@ -28,6 +28,7 @@ const toggleActive = () => isActive.value = !isActive.value;
 </template>
 
 <style scoped lang="scss">
+@use "src/assets/mixins";
 nav {
   background-color: var(--color-bg-1);
   overflow: hidden;
@@ -42,7 +43,7 @@ nav {
   text-decoration: none;
   font-size: 17px;
 
-  &:hover {
+  @include mixins.hover {
     background-color: var(--color-bg-sel);
     color: var(--color-text-sel);
   }
