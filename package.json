@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@vitejs/plugin-legacy": "^1.6.2",
-    "@vitejs/plugin-vue": "^1.9.4",
+    "@vitejs/plugin-vue": "^2.0.0",
     "@vue/test-utils": "^2.0.0-rc.17",
     "@vue/vue3-jest": "^27.0.0-alpha.3",
     "jest": "^27.3.1",
