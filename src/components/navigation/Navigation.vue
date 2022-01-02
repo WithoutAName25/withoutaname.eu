@@ -15,20 +15,27 @@ const toggleActive = () => isActive.value = !isActive.value;
       <div class="bar bar3"></div>
     </a>
     <div class="shortcuts only-portrait">
-      <NavItem href="/"><FontAwesomeIcon icon="house"/></NavItem>
+      <NavItem href="/">
+        <FontAwesomeIcon icon="house"/>
+      </NavItem>
     </div>
     <div class="menu" :class="{ active: isActive }">
       <NavItems/>
     </div>
     <div class="shortcuts-right">
-      <a @click="$emit('toggleTheme')"><FontAwesomeIcon icon="circle-half-stroke"/></a>
-      <a href="https://github.com/WithoutAName25/withoutaname.eu"><FontAwesomeIcon :icon="['fab', 'github']"/></a>
+      <a @click="$emit('toggleTheme')">
+        <FontAwesomeIcon icon="circle-half-stroke"/>
+      </a>
+      <a href="https://github.com/WithoutAName25/withoutaname.eu">
+        <FontAwesomeIcon :icon="['fab', 'github']"/>
+      </a>
     </div>
   </nav>
 </template>
 
 <style scoped lang="scss">
 @use "src/assets/mixins";
+
 nav {
   background-color: var(--color-bg-1);
   overflow: hidden;
@@ -37,15 +44,17 @@ nav {
 @mixin links {
   float: left;
   display: block;
+  position: relative;
   color: var(--color-text);
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  border-radius: 3px;
+  transition: background-color .5s;
 
   @include mixins.hover {
-    background-color: var(--color-bg-sel);
-    color: var(--color-text-sel);
+    background-color: var(--color-bg-3);
   }
 }
 
@@ -63,8 +72,7 @@ nav {
     @include links;
 
     &.router-link-active {
-      background-color: var(--color-accent-1);
-      color: var(--color-text);
+      background-color: var(--color-bg-4);
     }
   }
 
@@ -91,18 +99,23 @@ nav {
     }
 
     :deep(a) {
-      padding: 8px;
+      padding: 10px 30px;
       text-decoration: none;
       font-size: 36px;
       color: var(--color-text-light);
       display: block;
+      border-radius: 5px;
+      &.router-link-active {
+        background-color: var(--color-bg-1);
+      }
     }
 
     .items {
       position: relative;
       top: 50%;
-      transform: translate(0, -50%);
-      width: 100%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: max-content;
       text-align: center;
     }
   }
@@ -120,7 +133,7 @@ nav {
       height: 5px;
       background-color: var(--color-text);
       margin: 6px;
-      transition: 0.5s;
+      transition: transform .5s, opacity .5s;
     }
 
     &.active {

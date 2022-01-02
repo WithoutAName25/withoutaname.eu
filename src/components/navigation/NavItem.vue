@@ -16,7 +16,3 @@ defineProps({
     <slot/>
   </router-link>
 </template>
-
-<style scoped>
-
-</style>
