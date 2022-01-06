@@ -9,25 +9,27 @@ const toggleActive = () => isActive.value = !isActive.value;
 
 <template>
   <nav>
-    <a class="icon only-portrait" :class="{ active: isActive }" @click="toggleActive()">
-      <div class="bar bar1"></div>
-      <div class="bar bar2"></div>
-      <div class="bar bar3"></div>
-    </a>
-    <div class="shortcuts only-portrait">
-      <NavItem href="/">
-        <FontAwesomeIcon icon="house"/>
-      </NavItem>
+    <div class="only-portrait">
+      <a href="javascript:void(0);" class="icon" :class="{ active: isActive }" @click="toggleActive()" aria-label="Menu">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="bar bar3"></div>
+      </a>
+      <div class="shortcuts">
+        <NavItem href="/">
+          <FontAwesomeIcon icon="house"/>
+        </NavItem>
+      </div>
     </div>
     <div class="menu" :class="{ active: isActive }">
       <NavItems/>
     </div>
     <div class="shortcuts-right">
-      <a @click="$emit('toggleTheme')">
-        <FontAwesomeIcon icon="circle-half-stroke"/>
-      </a>
-      <a href="https://github.com/WithoutAName25/withoutaname.eu">
+      <a href="https://github.com/WithoutAName25/withoutaname.eu" aria-label="GitHub">
         <FontAwesomeIcon :icon="['fab', 'github']"/>
+      </a>
+      <a href="javascript:void(0);" @click="$emit('toggleTheme')" aria-label="Change theme">
+        <FontAwesomeIcon icon="circle-half-stroke"/>
       </a>
     </div>
   </nav>
@@ -42,14 +44,14 @@ nav {
 }
 
 @mixin links {
-  float: left;
-  display: block;
-  position: relative;
+  display: inline-block;
   color: var(--color-text);
+  background-color: transparent;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  border: none;
   border-radius: 3px;
   transition: background-color .5s;
 
@@ -58,26 +60,34 @@ nav {
   }
 }
 
-.shortcuts a {
-  @include links;
+.shortcuts {
+  float: left;
+  display: inline-block;
+  a {
+    @include links;
+  }
 }
 
-.shortcuts-right a {
-  @include links;
+.shortcuts-right {
   float: right;
+  display: inline-block;
+  a {
+    @include links;
+  }
 }
 
 @media screen and (orientation: landscape) {
+  .menu {
+    float: left;
+    display: inline-block;
+  }
+
   .items :deep(a) {
     @include links;
 
     &.router-link-active {
       background-color: var(--color-bg-4);
     }
-  }
-
-  .icon {
-    display: none;
   }
 }
 
@@ -105,6 +115,7 @@ nav {
       color: var(--color-text-light);
       display: block;
       border-radius: 5px;
+
       &.router-link-active {
         background-color: var(--color-bg-1);
       }

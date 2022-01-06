@@ -1,12 +1,7 @@
 @mixin hover {
-  &:focus {
+  &:focus, &:active {
     outline: none;
     @content
-  }
-  @media (hover: none) {
-    &:active {
-      @content
-    }
   }
   @media (hover: hover) {
     &:hover {
