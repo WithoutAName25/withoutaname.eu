@@ -13,7 +13,21 @@ export abstract class CircuitPart {
     abstract toString(): String
 
     static fromString(circuitInputs: CircuitInputs, str: string): CircuitPart {
-        // TODO handle wrong user inputs
+        const openingBrackets = str.split("(").length - 1
+        const closingBrackets = str.split(")").length - 1
+        for (let i = 0; i < openingBrackets - closingBrackets; i++) {
+            str += ")"
+        }
+        str = str
+            .replaceAll(/\|{2,}/g, "|")
+            .replaceAll(/&{2,}/g, "&")
+            .replaceAll(/((\w|\d){2,})|((\w|\d)!)/g, substring => {
+                let newString = substring[0]
+                for (let i = 1; i < substring.length; i++) {
+                    newString += "&" + substring[i]
+                }
+                return newString
+            })
         return this.internalFromString(circuitInputs, str)
     }
 
