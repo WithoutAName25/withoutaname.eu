@@ -10,6 +10,8 @@ export abstract class CircuitPart {
 
     abstract get(): boolean
 
+    abstract toString(): String
+
     static fromString(circuitInputs: CircuitInputs, str: string): CircuitPart {
         // TODO handle wrong user inputs
         return this.internalFromString(circuitInputs, str)
@@ -18,6 +20,12 @@ export abstract class CircuitPart {
     private static internalFromString(circuitInputs: CircuitInputs, str: string): CircuitPart {
         while (str.startsWith("(") && str.endsWith(")")) {
             str = str.substring(1, str.length - 1)
+        }
+        if (str === "0") {
+            return new StaticValue(false)
+        }
+        if (str === "1") {
+            return new StaticValue(true)
         }
         if (circuitInputs[str]) {
             return circuitInputs[str]
@@ -72,6 +80,10 @@ export class CircuitInput extends CircuitPart {
     get(): boolean {
         return this.valueRef.value;
     }
+
+    toString(): String {
+        return this.name
+    }
 }
 
 export class StaticValue extends CircuitPart {
@@ -83,7 +95,11 @@ export class StaticValue extends CircuitPart {
     }
 
     get(): boolean {
-        return false
+        return this.value
+    }
+
+    toString(): String {
+        return this.value ? "1" : "0"
     }
 }
 
@@ -106,6 +122,16 @@ export class NOTGate extends Gate {
     get(): boolean {
         return !this.inputs[0].get()
     }
+
+    toString(): String {
+        if (this.inputs[0] instanceof NOTGate ||
+            this.inputs[0] instanceof CircuitInput ||
+            this.inputs[0] instanceof StaticValue) {
+            return "!" + this.inputs[0].toString()
+        } else {
+            return "!(" + this.inputs[0].toString() + ")"
+        }
+    }
 }
 
 export class ORGate extends Gate {
@@ -114,6 +140,25 @@ export class ORGate extends Gate {
             if (input.get()) return true
         }
         return false;
+    }
+
+    toString(): String {
+        let str = ""
+        for (let i = 0; i < this.inputs.length; i++){
+            if (i !== 0) {
+                str += "|"
+            }
+            let input = this.inputs[i];
+            if (input instanceof NOTGate ||
+                input instanceof CircuitInput ||
+                input instanceof StaticValue ||
+                input instanceof ANDGate) {
+                str += "" + input.toString()
+            } else {
+                str += "(" + input.toString() + ")"
+            }
+        }
+        return str
     }
 }
 
@@ -124,16 +169,40 @@ export class ANDGate extends Gate {
         }
         return true
     }
+
+    toString(): String {
+        let str = ""
+        for (let i = 0; i < this.inputs.length; i++){
+            if (i !== 0) {
+                str += "&"
+            }
+            let input = this.inputs[i];
+            if (input instanceof NOTGate ||
+                input instanceof CircuitInput ||
+                input instanceof StaticValue) {
+                str += "" + input.toString()
+            } else {
+                str += "(" + input.toString() + ")"
+            }
+        }
+        return str
+    }
 }
 
 export class NORGate extends ORGate {
     get(): boolean {
         return !super.get()
     }
+    toString(): String {
+        return "!(" + super.toString() + ")";
+    }
 }
 
 export class NANDGate extends ANDGate {
     get(): boolean {
         return !super.get()
+    }
+    toString(): String {
+        return "!(" + super.toString() + ")";
     }
 }
