@@ -19,9 +19,9 @@ export abstract class CircuitPart {
             str += ")"
         }
         str = str
-            .replaceAll(/\|{2,}/g, "|")
-            .replaceAll(/&{2,}/g, "&")
-            .replaceAll(/((\w|\d){2,})|((\w|\d)!)/g, substring => {
+            .replace(/\|{2,}/g, "|")
+            .replace(/&{2,}/g, "&")
+            .replace(/((\w|\d){2,})|((\w|\d)!)/g, substring => {
                 let newString = substring[0]
                 for (let i = 1; i < substring.length; i++) {
                     newString += "&" + substring[i]
