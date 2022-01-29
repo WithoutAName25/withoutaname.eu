@@ -1,6 +1,3 @@
-[![Build](https://github.com/WithoutAName25/withoutaname.eu/actions/workflows/CICD.yml/badge.svg)](https://github.com/WithoutAName25/withoutaname.eu/actions/workflows/CICD.yml)
-[![codecov](https://codecov.io/gh/WithoutAName25/withoutaname.eu/branch/master/graph/badge.svg?token=C8BLVNJNXS)](https://codecov.io/gh/WithoutAName25/withoutaname.eu)
-
-# withoutaname.eu
+# withoutaname.eu [![Build](https://github.com/WithoutAName25/withoutaname.eu/actions/workflows/CICD.yml/badge.svg)](https://github.com/WithoutAName25/withoutaname.eu/actions/workflows/CICD.yml) [![codecov](https://codecov.io/gh/WithoutAName25/withoutaname.eu/branch/master/graph/badge.svg?token=C8BLVNJNXS)](https://codecov.io/gh/WithoutAName25/withoutaname.eu)
 
 Source code of my website [withoutaname.eu](https://withoutaname.eu)
