@@ -81,7 +81,7 @@ describe("Test circuit parts", () => {
     })
 
     const inA = new CircuitInput("A", false)
-    const inB = new CircuitInput("A", false)
+    const inB = new CircuitInput("B", false)
     const matrix = [
         [false, false],
         [false, true],
