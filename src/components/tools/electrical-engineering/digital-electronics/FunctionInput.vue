@@ -3,7 +3,7 @@ import { reactive, ref } from "vue";
 import { Circuit } from "../../../../script/tools/electrical-engineering/digital-electronics/circuit";
 
 const inputType = ref("function")
-const functionStr = ref("")
+const functionStr = ref("A&B|!(C&D)")
 const variables = reactive(["A", "B", "C", "D"]);
 const circuit = new Circuit(variables, functionStr)
 </script>
