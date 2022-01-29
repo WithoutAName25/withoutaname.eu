@@ -79,10 +79,10 @@ export class CircuitInput extends CircuitPart {
     readonly name: string
     value: boolean
 
-    constructor(name: string, valueRef: boolean) {
+    constructor(name: string, value: boolean) {
         super()
         this.name = name
-        this.value = valueRef
+        this.value = value
     }
 
     get(): boolean {

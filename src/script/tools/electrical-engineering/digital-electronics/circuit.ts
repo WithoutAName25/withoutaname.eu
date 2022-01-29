@@ -1,12 +1,12 @@
 import { CircuitInput, CircuitPart, StaticValue } from "./circuitpart";
-import { reactive, ref, Ref, watch } from "vue";
+import { ref, Ref, watch } from "vue";
 
 export type CircuitInputs = { [name: string]: CircuitInput };
 
 export class Circuit {
     readonly variables: string[];
     readonly functionStr: Ref<string>;
-    readonly inputRefs: CircuitInput[] = reactive([])
+    readonly inputRefs: CircuitInput[] = []
     readonly circuit: Ref<CircuitPart> = ref(new StaticValue(false))
 
     constructor(variables: string[], functionStr: Ref<string>) {

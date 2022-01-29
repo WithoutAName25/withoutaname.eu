@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview",
+    "serve": "vue-tsc --noEmit && vite build && vite preview",
     "test": "jest --coverage --env=jsdom"
   },
   "jest": {
