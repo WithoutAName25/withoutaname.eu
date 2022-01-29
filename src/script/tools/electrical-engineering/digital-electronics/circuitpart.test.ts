@@ -1,6 +1,6 @@
 import each from "jest-each";
-import {ANDGate, CircuitInput, CircuitInputs, CircuitPart, NOTGate, ORGate, StaticValue} from "./circuit";
-import {ref} from "vue";
+import { ANDGate, CircuitInput, CircuitPart, NOTGate, ORGate, StaticValue } from "./circuitpart";
+import { CircuitInputs } from "./circuit";
 
 describe("Test circuit parts", () => {
 
@@ -80,8 +80,8 @@ describe("Test circuit parts", () => {
         test(str, expected, expectedResult);
     })
 
-    const refA = ref(false)
-    const refB = ref(false)
+    const inA = new CircuitInput("A", false)
+    const inB = new CircuitInput("A", false)
     const matrix = [
         [false, false],
         [false, true],
@@ -92,37 +92,37 @@ describe("Test circuit parts", () => {
         [
             "A&B",
             {
-                "A": new CircuitInput("A", refA),
-                "B": new CircuitInput("B", refB)
+                "A": inA,
+                "B": inB
             },
             new ANDGate([
-                new CircuitInput("A", refA),
-                new CircuitInput("B", refB)
+                inA,
+                inB
             ]),
-            () => refA.value && refB.value
+            () => inA.value && inB.value
         ],
         [
             "A&!B|!A&B",
             {
-                "A": new CircuitInput("A", refA),
-                "B": new CircuitInput("B", refB)
+                "A": inA,
+                "B": inB
             },
             new ORGate([
                 new ANDGate([
-                    new CircuitInput("A", refA),
-                    new NOTGate(new CircuitInput("B", refB))
+                    inA,
+                    new NOTGate(inB)
                 ]),
                 new ANDGate([
-                    new NOTGate(new CircuitInput("A", refA)),
-                    new CircuitInput("B", refB)
+                    new NOTGate(inA),
+                    inB
                 ]),
             ]),
-            () => refA.value && !refB.value || !refA.value && refB.value
+            () => inA.value && !inB.value || !inA.value && inB.value
         ],
     ]).it("Test CircuitInputs: '%s'", (str: string, circuitInputs: CircuitInputs, expected: CircuitPart, expectedResult: () => boolean) => {
         for (const combination of matrix) {
-            refA.value = combination[0]
-            refB.value = combination[1]
+            inA.value = combination[0]
+            inB.value = combination[1]
             let circuitPart = CircuitPart.fromString(circuitInputs, str);
             expect(circuitPart).toStrictEqual(expected)
             expect(circuitPart.get()).toBe(expectedResult())
