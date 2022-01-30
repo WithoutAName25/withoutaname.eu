@@ -5,16 +5,19 @@ import { routes } from "./routes";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCircleHalfStroke, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCircleHalfStroke, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes
 })
 
-library.add(faGithub)
-library.add(faHouse)
-library.add(faCircleHalfStroke)
+library.add(
+		faGithub,
+		faHouse,
+		faCircleHalfStroke,
+		faCaretDown,
+)
 
 createApp(App)
 	.component('FontAwesomeIcon', FontAwesomeIcon)

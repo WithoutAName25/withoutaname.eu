@@ -1,0 +1,14 @@
+@mixin fullscreen {
+  @media screen and (orientation: portrait) {
+    @content
+  }
+}
+
+@mixin navbar {
+  .navbar {
+    @content
+  }
+  @media screen and (orientation: landscape) {
+    @content
+  }
+}

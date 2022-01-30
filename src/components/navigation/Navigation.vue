@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NavItems from "./NavItems.vue";
 import { ref } from "vue";
-import NavItem from "./NavItem.vue";
+import NavIconItem from "./NavIconItem.vue";
 
 const isActive = ref(false);
 const toggleActive = () => isActive.value = !isActive.value;
@@ -9,89 +9,50 @@ const toggleActive = () => isActive.value = !isActive.value;
 
 <template>
   <nav>
-    <div class="only-portrait">
-      <a href="javascript:void(0);" class="icon" :class="{ active: isActive }" @click="toggleActive()" aria-label="Menu">
+    <div class="only-portrait navbar">
+      <a href="javascript:void(0);" class="icon" :class="{ active: isActive }" @click="toggleActive()"
+         aria-label="Menu">
         <div class="bar bar1"></div>
         <div class="bar bar2"></div>
         <div class="bar bar3"></div>
       </a>
-      <div class="shortcuts">
-        <NavItem href="/">
-          <FontAwesomeIcon icon="house"/>
-        </NavItem>
-      </div>
+      <NavIconItem href="/" label="Home" icon="house"/>
     </div>
     <div class="menu" :class="{ active: isActive }">
       <NavItems/>
     </div>
-    <div class="shortcuts-right">
-      <a href="https://github.com/WithoutAName25/withoutaname.eu" aria-label="GitHub">
-        <FontAwesomeIcon :icon="['fab', 'github']"/>
-      </a>
-      <a href="javascript:void(0);" @click="$emit('toggleTheme')" aria-label="Change theme">
-        <FontAwesomeIcon icon="circle-half-stroke"/>
-      </a>
+    <div class="spacer"></div>
+    <div class="navbar">
+      <NavIconItem href="https://github.com/WithoutAName25/withoutaname.eu" label="GitHub" :icon="['fab', 'github']"/>
+      <NavIconItem @click="$emit('toggleTheme')" label="Change theme" icon="circle-half-stroke"/>
     </div>
   </nav>
 </template>
 
 <style scoped lang="scss">
 @use "src/assets/mixins";
+@use "src/assets/navigation";
 
 nav {
   background-color: var(--color-bg-1);
-  overflow: hidden;
-}
+  display: flex;
 
-@mixin links {
-  display: inline-block;
-  color: var(--color-text);
-  background-color: transparent;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  border: none;
-  border-radius: 3px;
-  transition: background-color .5s;
+  > * {
+    flex: 0 0 auto;
 
-  @include mixins.hover {
-    background-color: var(--color-bg-3);
-  }
-}
-
-.shortcuts {
-  float: left;
-  display: inline-block;
-  a {
-    @include links;
-  }
-}
-
-.shortcuts-right {
-  float: right;
-  display: inline-block;
-  a {
-    @include links;
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .menu {
-    float: left;
-    display: inline-block;
-  }
-
-  .items :deep(a) {
-    @include links;
-
-    &.router-link-active {
-      background-color: var(--color-bg-4);
+    &.spacer {
+      flex-grow: 1;
     }
   }
 }
 
-@media screen and (orientation: portrait) {
+@include navigation.navbar {
+  .menu {
+    display: inline-block;
+  }
+}
+
+@include navigation.fullscreen {
   .menu {
     height: 100%;
     width: 0;
@@ -108,19 +69,6 @@ nav {
       width: 100%;
     }
 
-    :deep(a) {
-      padding: 10px 30px;
-      text-decoration: none;
-      font-size: 36px;
-      color: var(--color-text-light);
-      display: block;
-      border-radius: 5px;
-
-      &.router-link-active {
-        background-color: var(--color-bg-1);
-      }
-    }
-
     .items {
       position: relative;
       top: 50%;
@@ -130,9 +78,10 @@ nav {
       text-align: center;
     }
   }
-
-  .icon {
+  .only-portrait > * {
     float: left;
+  }
+  .icon {
     position: relative;
     display: block;
     cursor: pointer;
