@@ -2,6 +2,10 @@
 import NavItem from "./NavItem.vue";
 
 defineProps({
+    external: {
+        default: false,
+        type: Boolean
+    },
     href: String,
     label: String,
     icon: [Object, Array, String]
@@ -9,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-  <NavItem :href="href" :aria-label="label">
+  <NavItem :href="href" :external="external" :aria-label="label">
     <FontAwesomeIcon :icon="icon"/>
   </NavItem>
 </template>

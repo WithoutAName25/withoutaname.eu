@@ -23,7 +23,8 @@ const toggleActive = () => isActive.value = !isActive.value;
     </div>
     <div class="spacer"></div>
     <div class="navbar">
-      <NavIconItem href="https://github.com/WithoutAName25/withoutaname.eu" label="GitHub" :icon="['fab', 'github']"/>
+      <NavIconItem href="https://github.com/WithoutAName25/withoutaname.eu" external label="GitHub"
+                   :icon="['fab', 'github']"/>
       <NavIconItem @click="$emit('toggleTheme')" label="Change theme" icon="circle-half-stroke"/>
     </div>
   </nav>
