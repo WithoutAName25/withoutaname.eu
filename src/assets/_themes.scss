@@ -1,5 +1,12 @@
 @mixin colors {
   --color-text-light: #eee;
+  --color-accent: #00aaff;
+  --color-accent-1: #0087d9;
+  --color-accent-2: #0066b3;
+  --color-accent-3: #00478f;
+  --color-accent-4: #002a6d;
+  --color-accent-grey: #3c4856;
+  --color-accent-grey-1: #9facbd;
 }
 
 @mixin colors-dark {
@@ -9,6 +16,7 @@
   --color-bg-3: #555;
   --color-bg-4: #666;
   --color-text: #fff;
+  --color-text-1: #ddd;
 }
 
 @mixin colors-light {
@@ -18,6 +26,7 @@
   --color-bg-3: #aaa;
   --color-bg-4: #999;
   --color-text: #000;
+  --color-text-1: #222;
 }
 
 @mixin theme-dark {
