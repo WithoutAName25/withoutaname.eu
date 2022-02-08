@@ -20,12 +20,14 @@ function toggleActive() {
 <template>
   <div class="item">
     <a :href="href" @click="toggleActive" v-if="external || !href">
+      <FontAwesomeIcon class="dropdown-icon" :class="{active: dropdownActive}" icon="caret-down"
+                       v-if="$slots.dropdown"/>
       <slot/>
-      <FontAwesomeIcon icon="caret-down" v-if="$slots.dropdown"/>
     </a>
     <router-link :to="href" @click="toggleActive" v-else>
+      <FontAwesomeIcon class="dropdown-icon" :class="{active: dropdownActive}" icon="caret-down"
+                       v-if="$slots.dropdown"/>
       <slot/>
-      <FontAwesomeIcon icon="caret-down" v-if="$slots.dropdown"/>
     </router-link>
     <div class="dropdown-content" :class="{active: dropdownActive}" v-if="$slots.dropdown">
       <slot name="dropdown"/>
@@ -37,6 +39,14 @@ function toggleActive() {
 @use "src/assets/mixins";
 @use "src/assets/navigation";
 
+.dropdown-icon {
+  transform: rotate(-90deg);
+  transition: transform .5s;
+}
+
+.dropdown-icon.active {
+  transform: none;
+}
 
 @include navigation.fullscreen {
   .item {
@@ -52,10 +62,11 @@ function toggleActive() {
     .dropdown-content {
       min-width: 10rem;
       border-radius: 3px;
-      display: none;
+      transform: scaleY(0);
+      transition: transform .5s;
 
       &.active {
-        display: block;
+        transform: scaleY(1);
       }
     }
   }
@@ -71,16 +82,21 @@ function toggleActive() {
       background-color: var(--color-bg-1);
       min-width: 10rem;
       border-radius: 3px;
-      display: none;
+      transform: scaleY(0);
+      transition: transform .5s;
+      transform-origin: top;
 
       &.active {
-        display: block;
+        transform: scaleY(1);
       }
     }
 
     @include mixins.hover {
+      .dropdown-icon {
+        transform: none;
+      }
       .dropdown-content {
-        display: block;
+        transform: scaleY(1);
       }
     }
 

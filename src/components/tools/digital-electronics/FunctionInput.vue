@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { Circuit } from "../../../../script/tools/electrical-engineering/digital-electronics/circuit";
+import { Circuit } from "../../../script/tools/digital-electronics/basics/circuit";
 
 const inputType = ref("function")
 const functionStr = ref("A&B|!(C&D)")

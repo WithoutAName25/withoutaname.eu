@@ -10,8 +10,8 @@ import NavDropdownEntry from "./NavDropdownEntry.vue";</script>
     <NavItem>
       Tools
       <template #dropdown>
-        <NavDropdownCategory name="electrical engineering">
-          <NavDropdownEntry href="/tools/digital-electronics">digital electronics</NavDropdownEntry>
+        <NavDropdownCategory name="digital electronics">
+          <NavDropdownEntry href="/tools/digital-electronics/basics">Basics</NavDropdownEntry>
         </NavDropdownCategory>
       </template>
     </NavItem>

@@ -8,18 +8,18 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCaretDown, faCircleHalfStroke, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 const router = createRouter({
-	history: createWebHistory(),
-	routes
+    history: createWebHistory(),
+    routes
 })
 
 library.add(
-		faGithub,
-		faHouse,
-		faCircleHalfStroke,
-		faCaretDown,
+        faGithub,
+        faHouse,
+        faCircleHalfStroke,
+        faCaretDown,
 )
 
 createApp(App)
-	.component('FontAwesomeIcon', FontAwesomeIcon)
-	.use(router)
-	.mount('#app')
+        .component('FontAwesomeIcon', FontAwesomeIcon)
+        .use(router)
+        .mount('#app')

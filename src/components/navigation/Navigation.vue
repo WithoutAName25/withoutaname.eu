@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import NavItems from "./NavItems.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import NavIconItem from "./NavIconItem.vue";
+import { useRoute } from "vue-router";
 
 const isActive = ref(false);
 const toggleActive = () => isActive.value = !isActive.value;
+const route = useRoute()
+watch(route, () => isActive.value = false, { flush: "pre", immediate: true, deep: true })
 </script>
 
 <template>
