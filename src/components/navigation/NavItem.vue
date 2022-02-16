@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 const props = defineProps({
     external: {
@@ -15,6 +16,10 @@ function toggleActive() {
         dropdownActive.value = !dropdownActive.value
     }
 }
+
+
+const route = useRoute()
+watch(route, () => dropdownActive.value = false, { flush: "pre", immediate: true, deep: true })
 </script>
 
 <template>
@@ -62,11 +67,9 @@ function toggleActive() {
     .dropdown-content {
       min-width: 10rem;
       border-radius: 3px;
-      transform: scaleY(0);
-      transition: transform .5s;
 
-      &.active {
-        transform: scaleY(1);
+      &:not(.active) {
+        display: none;
       }
     }
   }
