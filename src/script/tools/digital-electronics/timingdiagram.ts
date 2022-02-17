@@ -1,15 +1,15 @@
 import { reactive } from "vue";
 
 export class SingleTimingData {
-    readonly name: String
+    readonly name: string
     readonly data: Array<Boolean>
 
-    constructor(name: String, data: Array<Boolean>) {
+    constructor(name: string, data: Array<Boolean>) {
         this.name = name
         this.data = data
     }
 
-    getPolylinePoints(x: number, y: number, dx: number, dy: number): String {
+    getPolylinePoints(x: number, y: number, dx: number, dy: number): string {
         let s = ""
         for (let i = 0; i < this.data.length; i++) {
             if (i != 0) s += " "
