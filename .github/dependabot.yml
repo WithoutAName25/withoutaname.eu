@@ -7,5 +7,3 @@ updates:
       time: "18:00"
     labels:
       - "dependencies"
-    reviewers:
-      - "WithoutAName25"
