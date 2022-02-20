@@ -1,3 +1,4 @@
+import autoprefixer from "autoprefixer"
 import path from "path"
 import { defineConfig } from "vite"
 import Vue from "@vitejs/plugin-vue"
@@ -5,13 +6,22 @@ import Pages from "vite-plugin-pages"
 import Components from "unplugin-vue-components/vite"
 import AutoImport from "unplugin-auto-import/vite"
 import Markdown from "vite-plugin-md"
-import { VitePWA } from "vite-plugin-pwa"
-import Prism from "markdown-it-prism"
 import LinkAttributes from "markdown-it-link-attributes"
-
-const markdownWrapperClasses = "prose prose-sm m-auto text-left"
+import legacy from "@vitejs/plugin-legacy"
+import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
+  css: {
+    postcss: {
+      plugins: [
+        autoprefixer(),
+        require("postcss-preset-env")({
+          stage: 1,
+        }),
+        require("postcss-jit-props")(require("open-props")),
+      ],
+    },
+  },
   resolve: {
     alias: {
       "~/": `${path.resolve(__dirname, "src")}/`,
@@ -21,17 +31,12 @@ export default defineConfig({
     Vue({
       include: [/\.vue$/, /\.md$/],
     }),
+    legacy(),
     Pages({
       extensions: ["vue", "md"],
     }),
     AutoImport({
-      imports: [
-        "vue",
-        "vue-router",
-        "vue-i18n",
-        "@vueuse/head",
-        "@vueuse/core",
-      ],
+      imports: ["vue", "vue-router", "@vueuse/head", "@vueuse/core"],
       dts: "src/auto-imports.d.ts",
     }),
     Components({
@@ -42,11 +47,8 @@ export default defineConfig({
       dts: "src/components.d.ts",
     }),
     Markdown({
-      wrapperClasses: markdownWrapperClasses,
       headEnabled: true,
       markdownItSetup(md) {
-        // https://prismjs.com/
-        md.use(Prism)
         md.use(LinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
           attrs: {
@@ -58,35 +60,22 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "robots.txt", "safari-pinned-tab.svg"],
       manifest: {
-        name: "Vitesse",
-        short_name: "Vitesse",
+        name: "WithoutAName.net",
+        short_name: "WithoutAName",
         theme_color: "#ffffff",
-        icons: [
-          {
-            src: "/pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-          {
-            src: "/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
-          },
-        ],
       },
     }),
   ],
   ssgOptions: {
-    script: "async",
+    dirStyle: "nested",
     formatting: "minify",
+    script: undefined,
+    includedRoutes: (paths, routes) => {
+      paths = paths.filter((path) => !path.includes(":") && !path.includes("*"))
+      paths.push("/not-found")
+      return paths
+    },
   },
   optimizeDeps: {
     include: ["vue", "vue-router", "@vueuse/core", "@vueuse/head"],

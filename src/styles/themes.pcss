@@ -1,0 +1,50 @@
+:where(html) {
+  --brand-light: var(--blue-6);
+  --brand-dark: var(--blue-4);
+  --brand: var(--brand-light);
+}
+
+@media (--OSDark) {
+  :where(html) {
+    --brand: var(--brand-dark);
+  }
+}
+
+:where([color-scheme="light"]) {
+  color-scheme: light;
+
+  --brand: var(--brand-light);
+
+  --link: var(--indigo-7);
+  --link-visited: var(--grape-7);
+
+  --text-1: var(--gray-9);
+  --text-2: var(--gray-7);
+
+  --surface-1: var(--gray-0);
+  --surface-2: var(--gray-2);
+  --surface-3: var(--gray-3);
+  --surface-4: var(--gray-4);
+
+  @media (--HDcolor) {
+    --link: color(display-p3 0 0.5 1);
+    --link-visited: color(display-p3 0.6 0.2 1);
+  }
+}
+
+:where([color-scheme="dark"]) {
+  color-scheme: dark;
+
+  --brand: var(--brand-dark);
+
+  --link: var(--indigo-3);
+  --link-visited: var(--grape-3);
+
+  --text-1: var(--gray-1);
+  --text-2: var(--gray-4);
+
+  --surface-1: var(--gray-9);
+  --surface-2: var(--gray-8);
+  --surface-3: var(--gray-7);
+  --surface-4: var(--gray-6);
+}
