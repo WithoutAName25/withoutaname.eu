@@ -9,7 +9,7 @@ useTheme()
 </script>
 
 <template>
-  <header></header>
+  <header><HeaderBar /></header>
   <main>
     <router-view />
   </main>
@@ -17,6 +17,12 @@ useTheme()
 
 <style>
 @import "styles/style.pcss";
+#app {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  overflow: hidden;
+}
 
 header {
   flex: 0 0 auto;
