@@ -22,7 +22,7 @@ watch(useRoute(), () => {
       <ul :class="$style.navigation" :data-expanded="expanded">
         <MainNavItem href="/">Home</MainNavItem>
         <MainNavItem href="/maven/" external>Maven</MainNavItem>
-        <MainNavItem href="/tools">Tools</MainNavItem>
+        <MainNavItem href="/tools" include-sublinks>Tools</MainNavItem>
       </ul>
     </nav>
   </OnClickOutside>

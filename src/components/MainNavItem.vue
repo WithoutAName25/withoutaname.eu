@@ -1,11 +1,27 @@
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   external: {
     default: false,
     type: Boolean,
   },
   href: String,
+  includeSublinks: {
+    default: false,
+    type: Boolean,
+  },
 })
+const routerLinkActiveSublink = ref(false)
+
+if (props.includeSublinks) {
+  const route = useRoute()
+  function updateSublink() {
+    routerLinkActiveSublink.value = route.path.startsWith(props.href ?? "")
+  }
+  updateSublink()
+  watch(route, () => {
+    updateSublink()
+  })
+}
 </script>
 
 <template>
@@ -13,7 +29,11 @@ defineProps({
     <a :href="href" v-if="external || !href">
       <slot />
     </a>
-    <router-link :to="href" v-else>
+    <router-link
+      :class="{ 'router-sublink-active': routerLinkActiveSublink }"
+      :to="href"
+      v-else
+    >
       <slot />
     </router-link>
   </li>
@@ -41,9 +61,12 @@ defineProps({
       right: 50%;
       transition: left 0.5s, right 0.5s;
     }
-    &:global(.router-link-active)::after {
-      left: 0.25em;
-      right: 0.25em;
+    &:global(.router-link-active),
+    &:global(.router-sublink-active) {
+      &::after {
+        left: 0.25em;
+        right: 0.25em;
+      }
     }
   }
 }
