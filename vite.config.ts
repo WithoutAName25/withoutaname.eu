@@ -66,16 +66,16 @@ export default defineConfig({
         })
       },
     }),
-    VitePWA({
-      registerType: "autoUpdate",
-      manifest: {
-        name: "WithoutAName",
-      },
-      workbox: {
-        globIgnores: ["/maven**"],
-        navigateFallbackDenylist: [/^\/maven/],
-      },
-    }),
+    // VitePWA({
+    //   registerType: "autoUpdate",
+    //   manifest: {
+    //     name: "WithoutAName",
+    //   },
+    //   workbox: {
+    //     globIgnores: ["/maven**"],
+    //     navigateFallbackDenylist: [/^\/maven/],
+    //   },
+    // }),
 
     vueI18n({
       runtimeOnly: true,
