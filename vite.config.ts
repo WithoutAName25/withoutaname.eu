@@ -10,6 +10,7 @@ import Components from "unplugin-vue-components/vite"
 import { defineConfig } from "vite"
 import Markdown from "vite-plugin-md"
 import Pages from "vite-plugin-pages"
+// import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
   css: {
@@ -71,6 +72,7 @@ export default defineConfig({
     //     name: "WithoutAName",
     //   },
     //   workbox: {
+    //     dontCacheBustURLsMatching
     //     globIgnores: ["/maven**"],
     //     navigateFallbackDenylist: [/^\/maven/],
     //   },
