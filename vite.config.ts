@@ -73,6 +73,9 @@ export default defineConfig({
         short_name: "WithoutAName",
         theme_color: "#ffffff",
       },
+      workbox: {
+        navigateFallbackDenylist: [/^\/maven/],
+      },
     }),
 
     vueI18n({
