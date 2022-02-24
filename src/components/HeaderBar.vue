@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Icon } from "@iconify/vue"
+</script>
 
 <template>
   <div :class="$style.bar">

@@ -1,13 +1,15 @@
-import autoprefixer from "autoprefixer"
-import path from "path"
-import { defineConfig } from "vite"
-import Vue from "@vitejs/plugin-vue"
-import Pages from "vite-plugin-pages"
-import Components from "unplugin-vue-components/vite"
-import AutoImport from "unplugin-auto-import/vite"
-import Markdown from "vite-plugin-md"
-import LinkAttributes from "markdown-it-link-attributes"
+// @ts-ignore
+import vueI18n from "@intlify/vite-plugin-vue-i18n"
 import legacy from "@vitejs/plugin-legacy"
+import Vue from "@vitejs/plugin-vue"
+import autoprefixer from "autoprefixer"
+import LinkAttributes from "markdown-it-link-attributes"
+import path from "path"
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { defineConfig } from "vite"
+import Markdown from "vite-plugin-md"
+import Pages from "vite-plugin-pages"
 import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
@@ -36,7 +38,13 @@ export default defineConfig({
       extensions: ["vue", "md"],
     }),
     AutoImport({
-      imports: ["vue", "vue-router", "@vueuse/head", "@vueuse/core"],
+      imports: [
+        "vue",
+        "vue-router",
+        "vue-i18n",
+        "@vueuse/head",
+        "@vueuse/core",
+      ],
       dts: "src/auto-imports.d.ts",
     }),
     Components({
@@ -65,6 +73,11 @@ export default defineConfig({
         short_name: "WithoutAName",
         theme_color: "#ffffff",
       },
+    }),
+
+    vueI18n({
+      runtimeOnly: true,
+      include: [path.resolve(__dirname, "locales/**")],
     }),
   ],
   ssgOptions: {

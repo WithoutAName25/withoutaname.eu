@@ -4,9 +4,12 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DownloadableContent: typeof import('./components/DownloadableContent.vue')['default']
+    FlipFlopDisplay: typeof import('./components/tools/digital-electronics/flip-flop/FlipFlopDisplay.vue')['default']
+    FlipFlopSettingsMenu: typeof import('./components/tools/digital-electronics/flip-flop/FlipFlopSettingsMenu.vue')['default']
     HeaderBar: typeof import('./components/HeaderBar.vue')['default']
-    MainNav: typeof import('./components/MainNav.vue')['default']
-    MainNavItem: typeof import('./components/MainNavItem.vue')['default']
+    MainNav: typeof import('./components/nav/MainNav.vue')['default']
+    MainNavItem: typeof import('./components/nav/MainNavItem.vue')['default']
   }
 }
 

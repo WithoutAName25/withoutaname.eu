@@ -26,11 +26,12 @@ useTheme()
 
 header {
   flex: 0 0 auto;
+  z-index: 100;
 }
 
 main {
-  padding: 1rem;
+  padding: 1.5rem 1rem 1rem;
   flex: 1 1 auto;
-  overflow: hidden auto;
+  overflow: auto;
 }
 </style>
