@@ -69,11 +69,10 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "WithoutAName.net",
-        short_name: "WithoutAName",
-        theme_color: "#ffffff",
+        name: "WithoutAName",
       },
       workbox: {
+        globIgnores: ["/maven**"],
         navigateFallbackDenylist: [/^\/maven/],
       },
     }),
