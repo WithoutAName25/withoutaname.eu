@@ -95,7 +95,7 @@ export class FlipFlop {
     if (type === FlipFlopType.D) {
       reset = !set
     } else if (
-      type === FlipFlopType.T ||
+      (type === FlipFlopType.T && set) ||
       (type === FlipFlopType.JK && set && reset)
     ) {
       set = !this.oQ.value
