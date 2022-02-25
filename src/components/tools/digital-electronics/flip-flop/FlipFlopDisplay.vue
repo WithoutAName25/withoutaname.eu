@@ -160,7 +160,7 @@ function isMasterSlaveSymbol(name: String): boolean {
           width="10"
           height="10"
           :stroke="pin.ref.value ? 'red' : undefined"
-          :class="{ active: pin.ref.value }"
+          :class="{ active: pin.ref.value, [$style.clickable]: pin.isInput }"
         ></rect>
       </g>
     </g>
@@ -169,6 +169,9 @@ function isMasterSlaveSymbol(name: String): boolean {
 </template>
 
 <style module>
+.clickable {
+  cursor: pointer;
+}
 .svg {
   & * {
     fill: transparent;
