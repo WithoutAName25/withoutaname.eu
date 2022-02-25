@@ -56,7 +56,7 @@ const { t } = useI18n()
     </div>
     <div>
       {{ t("flipFlop.asyncInputs") }}:
-      <ul>
+      <ul :class="{ [$style.disabled]: !settings.preClearAllowed.value }">
         <li>
           <label>
             <input
@@ -87,12 +87,10 @@ const { t } = useI18n()
           </label>
         </li>
         <li>
-          <label>
-            {{ t("flipFlop.history.length") }}:
-            <button @click="historyLength--">-</button>
-            {{ historyLength }}
-            <button @click="historyLength++">+</button>
-          </label>
+          {{ t("flipFlop.history.length") }}:
+          <button @click="historyLength--">-</button>
+          {{ historyLength }}
+          <button @click="historyLength++">+</button>
         </li>
       </ul>
     </div>
@@ -106,10 +104,6 @@ const { t } = useI18n()
 
   & label {
     cursor: pointer;
-    &:has(> input[disabled]) {
-      cursor: default;
-      color: var(--gray-6);
-    }
     & input {
       cursor: inherit;
     }
@@ -119,6 +113,10 @@ const { t } = useI18n()
     padding-left: 1em;
     list-style: none;
   }
+}
+.disabled label {
+  cursor: default;
+  color: var(--gray-6);
 }
 </style>
 

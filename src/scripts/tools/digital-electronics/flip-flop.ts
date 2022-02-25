@@ -25,7 +25,9 @@ export class FlipFlop {
 
   readonly pins = new Map<Pos, Ref<Array<FlipFlopPin>>>()
 
-  readonly history = ref<FlipFlopHistory>()
+  readonly history: FlipFlopHistory = reactive(
+    new FlipFlopHistory()
+  ) as FlipFlopHistory
 
   constructor(settings: FlipFlopSettings) {
     this.settings = settings
@@ -185,6 +187,6 @@ export class FlipFlop {
     const allPins = computed(() => {
       return left.value.concat(top.value, bottom.value, right.value)
     })
-    this.history.value = new FlipFlopHistory(allPins)
+    this.history.setPins(allPins)
   }
 }

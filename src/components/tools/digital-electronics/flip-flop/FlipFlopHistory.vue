@@ -4,7 +4,7 @@ import {
   historyLength,
 } from "~/scripts/tools/digital-electronics/flip-flop-history"
 
-defineProps({
+const props = defineProps({
   history: {
     required: true,
     type: FlipFlopHistory,
@@ -13,6 +13,10 @@ defineProps({
 
 const intervalWidth = computed(() => {
   return 80 / historyLength.value
+})
+
+const rowHeight = computed(() => {
+  return 70 / props.history.pinHistories.length
 })
 </script>
 
@@ -32,16 +36,12 @@ const intervalWidth = computed(() => {
         x="0"
         y="0"
         :width="intervalWidth"
-        :height="70 / history.pinHistories.length"
+        :height="rowHeight"
         patternUnits="userSpaceOnUse"
       >
         <polygon
           :class="$style.grid"
-          :points="`0,0 0,${
-            70 / history.pinHistories.length
-          } ${intervalWidth},${
-            70 / history.pinHistories.length
-          } ${intervalWidth},0`"
+          :points="`0,0 0,${rowHeight} ${intervalWidth},${rowHeight} ${intervalWidth},0`"
           fill="none"
           stroke="#bbb"
           stroke-width="0.5"
@@ -59,7 +59,7 @@ const intervalWidth = computed(() => {
     <g v-for="(pinHistory, i) in history.pinHistories">
       <text
         x="-7.5"
-        :y="(70 / history.pinHistories.length) * (i + 0.5)"
+        :y="rowHeight * (i + 0.5)"
         dominant-baseline="middle"
         text-anchor="middle"
         fill="black"
@@ -71,9 +71,9 @@ const intervalWidth = computed(() => {
         :points="
           pinHistory.getPolyPoints(
             0,
-            (70 / history.pinHistories.length) * (i + 0.5),
+            rowHeight * (i + 0.5),
             80,
-            (70 / history.pinHistories.length) * 0.5
+            rowHeight * 0.5
           )
         "
         stroke="black"

@@ -1,14 +1,17 @@
-import { Ref } from "vue"
+import { Ref, WatchStopHandle } from "vue"
 import { FlipFlopPin } from "~/scripts/tools/digital-electronics/flip-flop-pins"
 
 export const historyLength = ref(5)
 
 export class FlipFlopHistory {
-  readonly pinHistories = ref<Array<PinHistory>>()
+  pinHistories: Array<PinHistory> = []
 
-  constructor(pins: Ref<Array<FlipFlopPin> | undefined>) {
-    let removeWatcher = () => {}
-    watchEffect(() => {
+  private watch: WatchStopHandle = () => {}
+
+  setPins(pins: Ref<Array<FlipFlopPin> | undefined>) {
+    let watchPins = () => {}
+    this.watch()
+    this.watch = watchEffect(() => {
       const pinValues = new Array<Ref<Boolean>>()
       const pinHistories = new Array<PinHistory>()
       let clockId = -1
@@ -21,9 +24,9 @@ export class FlipFlopHistory {
           }
         }
       }
-      this.pinHistories.value = pinHistories
-      removeWatcher()
-      removeWatcher = watch(pinValues, (values, oldValues) => {
+      this.pinHistories = pinHistories
+      watchPins()
+      watchPins = watch(pinValues, (values, oldValues) => {
         const newInterval =
           clockId === -1 || values[clockId] !== oldValues[clockId]
         for (let i = 0; i < pinHistories.length; i++) {
@@ -53,7 +56,7 @@ export class PinHistory {
     }
   }
 
-  getPolyPoints(x: number, y: number, width: number, height: number): String {
+  getPolyPoints(x: number, y: number, width: number, height: number): string {
     let s = ""
     const intervalWidth = width / historyLength.value
     const startI = historyLength.value - this.data.length
