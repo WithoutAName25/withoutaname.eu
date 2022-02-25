@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { PropType } from "vue"
+import { historyLength } from "~/scripts/tools/digital-electronics/flip-flop-history"
 import {
   ClockControl,
   FlipFlopSettings,
@@ -17,6 +18,7 @@ const { t } = useI18n()
 
 <template>
   <fieldset :class="$style.settings">
+    <legend>{{ t("flipFlop.settings") }}</legend>
     <div>
       {{ t("flipFlop.type") }}:
       <ul>
@@ -76,6 +78,23 @@ const { t } = useI18n()
           </label>
         </li>
       </ul>
+      {{ t("flipFlop.history.name") }}:
+      <ul>
+        <li>
+          <label>
+            <input type="checkbox" v-model="settings.showHistory.value" />
+            {{ t("flipFlop.history.enabled") }}
+          </label>
+        </li>
+        <li>
+          <label>
+            {{ t("flipFlop.history.length") }}:
+            <button @click="historyLength--">-</button>
+            {{ historyLength }}
+            <button @click="historyLength++">+</button>
+          </label>
+        </li>
+      </ul>
     </div>
   </fieldset>
 </template>
@@ -87,6 +106,13 @@ const { t } = useI18n()
 
   & label {
     cursor: pointer;
+    &:has(> input[disabled]) {
+      cursor: default;
+      color: var(--gray-6);
+    }
+    & input {
+      cursor: inherit;
+    }
   }
 
   & ul {
@@ -107,6 +133,11 @@ en:
       edge: "Edge-triggered"
       dual_state: "Master-slave state controlled"
       dual_edge: "Master-slave edge-triggered"
+    history:
+      name: "Timing diagram"
+      enabled: "Show"
+      length: "Length"
+    settings: "Settings"
     type: "Flip-flop type"
     types:
       rs: "RS-flip-flop"
@@ -123,6 +154,11 @@ de:
       edge: "Einflankengesteuert"
       dual_state: "Zweizustandsgesteuert"
       dual_edge: "Zweiflankengesteuert"
+    history:
+      name: "Zeitablaufdiagramm"
+      enabled: "Anzeigen"
+      length: "Länge"
+    settings: "Einstellungen"
     type: "Flip-Flop-Typ"
     types:
       rs: "RS-Flip-Flop"

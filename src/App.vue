@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import HeaderBar from "~/components/HeaderBar.vue"
 import { useTheme } from "~/composables"
+import cssHasPseudo from "css-has-pseudo/browser"
 
 useHead({
   title: "WithoutAName",
   meta: [{ name: "description", content: "Personal website of WithoutAName" }],
 })
+
+cssHasPseudo(document)
 useTheme()
 </script>
 

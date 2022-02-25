@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import MainNav from "~/components/nav/MainNav.vue"
 </script>
 
 <template>
   <div :class="$style.bar">
-    <router-link :class="$style.logo_link" to="/">
+    <router-link aria-label="Home" :class="$style.logo_link" to="/">
       <Icon :class="$style.logo" icon="mdi:home" />
     </router-link>
     <MainNav :class="$style.nav" />

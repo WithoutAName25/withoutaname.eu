@@ -16,6 +16,15 @@ export enum ClockControl {
 }
 
 export class FlipFlopSettings {
+  readonly flipFlopType = ref(FlipFlopType.RS)
+  readonly nonEdgeClockControlAllowed: Ref<Boolean>
+  readonly clockControl = ref(ClockControl.NONE)
+  readonly preClearAllowed: Ref<Boolean>
+  readonly withPre = ref(false)
+  readonly withClr = ref(false)
+
+  readonly showHistory = ref(true)
+
   constructor() {
     this.preClearAllowed = computed(() => {
       return this.clockControl.value !== ClockControl.NONE
@@ -42,10 +51,4 @@ export class FlipFlopSettings {
       }
     })
   }
-  readonly flipFlopType = ref(FlipFlopType.RS)
-  readonly nonEdgeClockControlAllowed: Ref<Boolean>
-  readonly clockControl = ref(ClockControl.NONE)
-  readonly preClearAllowed: Ref<Boolean>
-  readonly withPre = ref(false)
-  readonly withClr = ref(false)
 }

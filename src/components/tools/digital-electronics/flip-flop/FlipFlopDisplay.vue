@@ -64,6 +64,7 @@ function isMasterSlaveSymbol(name: String): boolean {
     fill="none"
     stroke="black"
     font-size="10"
+    aria-label="Flip-flop display"
   >
     <g v-for="[pos, pins] in flipFlop.pins">
       <g v-for="(pin, i) in pins.value">

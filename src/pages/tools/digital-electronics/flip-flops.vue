@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import DownloadableContent from "~/components/DownloadableContent.vue"
+import FlipFlopDisplay from "~/components/tools/digital-electronics/flip-flop/FlipFlopDisplay.vue"
+import FlipFlopHistory from "~/components/tools/digital-electronics/flip-flop/FlipFlopHistory.vue"
+import FlipFlopSettingsMenu from "~/components/tools/digital-electronics/flip-flop/FlipFlopSettingsMenu.vue"
 import { FlipFlop } from "~/scripts/tools/digital-electronics/flip-flop"
 import { FlipFlopSettings } from "~/scripts/tools/digital-electronics/flip-flop-settings"
 
 const settings = new FlipFlopSettings()
 const flipFlop = new FlipFlop(settings)
+const history = flipFlop.history
 </script>
 
 <template>
@@ -14,6 +19,11 @@ const flipFlop = new FlipFlop(settings)
         <FlipFlopDisplay :flip-flop="flipFlop" />
       </DownloadableContent>
     </div>
+    <div v-if="settings.showHistory.value">
+      <DownloadableContent type="image/svg+xml" filename="flip-flop.svg">
+        <FlipFlopHistory :history="history" />
+      </DownloadableContent>
+    </div>
   </div>
 </template>
 
@@ -22,5 +32,10 @@ const flipFlop = new FlipFlop(settings)
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
   justify-content: center;
+
+  & div {
+    display: grid;
+    place-content: center;
+  }
 }
 </style>

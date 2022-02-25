@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { OnClickOutside } from "@vueuse/components"
+import MainNavItem from "~/components/nav/MainNavItem.vue"
 const expanded = ref(false)
 
 watch(useRoute(), () => {

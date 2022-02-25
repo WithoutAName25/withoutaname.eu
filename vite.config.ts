@@ -6,7 +6,6 @@ import autoprefixer from "autoprefixer"
 import LinkAttributes from "markdown-it-link-attributes"
 import path from "path"
 import AutoImport from "unplugin-auto-import/vite"
-import Components from "unplugin-vue-components/vite"
 import { defineConfig } from "vite"
 import Markdown from "vite-plugin-md"
 import Pages from "vite-plugin-pages"
@@ -47,13 +46,6 @@ export default defineConfig({
       ],
       dts: "src/auto-imports.d.ts",
     }),
-    Components({
-      // allow auto load markdown components under `./src/components/`
-      extensions: ["vue", "md"],
-      // allow auto import and register components used in markdown
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      dts: "src/components.d.ts",
-    }),
     Markdown({
       headEnabled: true,
       markdownItSetup(md) {
@@ -87,7 +79,7 @@ export default defineConfig({
     dirStyle: "nested",
     formatting: "minify",
     script: undefined,
-    includedRoutes: (paths, routes) => {
+    includedRoutes: (paths) => {
       paths = paths.filter((path) => !path.includes(":") && !path.includes("*"))
       paths.push("/not-found")
       return paths
