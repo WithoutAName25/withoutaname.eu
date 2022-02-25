@@ -116,7 +116,7 @@ en:
 de:
   flipFlop:
     asyncInputs: "Asynchrone Eingänge"
-    clockControl: "Clock"
+    clockControl: "Taktsteuerung"
     clockControls:
       none: "Ohne"
       state: "Einzustandsgesteuert"

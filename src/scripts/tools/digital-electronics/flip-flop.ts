@@ -81,33 +81,25 @@ export class FlipFlop {
       this.oQNot.value = this.iClr.value
       return
     }
-    // TODO simplify
-    let set = false
-    let reset = false
-    switch (this.settings.flipFlopType.value) {
-      case FlipFlopType.RS:
-        set = this.i0.value
-        reset = this.i1.value
-        break
-      case FlipFlopType.D:
-        set = this.i0.value
-        reset = !set
-        break
-      case FlipFlopType.JK:
-        set = this.i0.value
-        reset = this.i1.value
-        if (set && reset) {
-          set = !this.oQ.value
-          reset = this.oQ.value
-        }
-        break
-      case FlipFlopType.T:
-        if (this.i0.value) {
-          set = !this.oQ.value
-          reset = this.oQ.value
-        }
-        break
+
+    const type = this.settings.flipFlopType.value
+
+    let set = this.i0.value
+    let reset = this.i1.value
+
+    if (type === FlipFlopType.D) {
+      reset = !set
+    } else if (
+      type === FlipFlopType.T ||
+      (type === FlipFlopType.JK && set && reset)
+    ) {
+      set = !this.oQ.value
+      reset = this.oQ.value
     }
+    this.updateInternal(reset, set)
+  }
+
+  private updateInternal(reset: boolean, set: boolean) {
     if (reset) {
       this.qNext.value = false
     } else if (set) {

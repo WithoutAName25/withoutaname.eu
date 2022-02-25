@@ -54,7 +54,6 @@ function isMasterSlaveSymbol(name: String): boolean {
       props.flipFlop.settings.clockControl.value === ClockControl.DUAL_EDGE)
   )
 }
-// TODO negate output circle
 </script>
 
 <template>
@@ -69,10 +68,18 @@ function isMasterSlaveSymbol(name: String): boolean {
     <g v-for="[pos, pins] in flipFlop.pins">
       <g v-for="(pin, i) in pins.value">
         <line
-          :x1="getX(pos, i, 0, 0)"
-          :y1="getY(pos, i, 0, 0)"
+          :x1="getX(pos, i, pin.name.endsWith('\'') ? 5 : 0, 0)"
+          :y1="getY(pos, i, pin.name.endsWith('\'') ? 5 : 0, 0)"
           :x2="getX(pos, i, 10, 0)"
           :y2="getY(pos, i, 10, 0)"
+          :stroke="pin.ref.value ? 'red' : undefined"
+          :class="{ active: pin.ref.value }"
+        />
+        <circle
+          v-if="pin.name.endsWith('\'')"
+          r="2"
+          :cx="getX(pos, i, 3, 0)"
+          :cy="getY(pos, i, 3, 0)"
           :stroke="pin.ref.value ? 'red' : undefined"
           :class="{ active: pin.ref.value }"
         />
