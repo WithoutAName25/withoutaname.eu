@@ -15,25 +15,43 @@ export enum ClockControl {
   DUAL_EDGE = "dual_edge",
 }
 
+export class TimingDiagramSettings {
+  show = true
+  historyLength = 5
+  showQMaster = false
+  showQNot = false
+}
+
 export class FlipFlopSettings {
   readonly flipFlopType = ref(FlipFlopType.RS)
-  readonly nonEdgeClockControlAllowed: Ref<Boolean>
   readonly clockControl = ref(ClockControl.NONE)
-  readonly preClearAllowed: Ref<Boolean>
   readonly withPre = ref(false)
   readonly withClr = ref(false)
 
-  readonly showHistory = ref(true)
+  readonly timingDiagram = reactive(
+    new TimingDiagramSettings()
+  ) as TimingDiagramSettings
+
+  readonly qMaster = computed(
+    () =>
+      this.clockControl.value === ClockControl.DUAL_STATE ||
+      this.clockControl.value === ClockControl.DUAL_EDGE
+  )
+
+  readonly nonEdgeClockControlAllowed: Ref<Boolean> = computed(
+    () =>
+      this.flipFlopType.value === FlipFlopType.RS ||
+      this.flipFlopType.value === FlipFlopType.D
+  )
+  readonly preClearAllowed: Ref<Boolean> = computed(
+    () => this.clockControl.value !== ClockControl.NONE
+  )
 
   constructor() {
-    this.preClearAllowed = computed(() => {
-      return this.clockControl.value !== ClockControl.NONE
-    })
-    this.nonEdgeClockControlAllowed = computed(() => {
-      return (
-        this.flipFlopType.value === FlipFlopType.RS ||
-        this.flipFlopType.value === FlipFlopType.D
-      )
+    watch(this.qMaster, (value) => {
+      if (!value) {
+        this.timingDiagram.showQMaster = false
+      }
     })
     watch(this.preClearAllowed, (value) => {
       if (!value) {

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import {
-  FlipFlopHistory,
-  historyLength,
-} from "~/scripts/tools/digital-electronics/flip-flop-history"
+import { FlipFlopHistory } from "~/scripts/tools/digital-electronics/flip-flop-history"
 
 const props = defineProps({
   history: {
@@ -12,12 +9,24 @@ const props = defineProps({
 })
 
 const intervalWidth = computed(() => {
-  return 80 / historyLength.value
+  return 80 / props.history.settings.historyLength
 })
 
-const rowHeight = computed(() => {
-  return 70 / props.history.pinHistories.length
-})
+const count = computed(
+  () =>
+    props.history.pinHistories.length -
+    (props.history.settings.showQMaster ? 0 : 1) -
+    (props.history.settings.showQNot ? 0 : 1)
+)
+
+const rowHeight = computed(() => 70 / count.value)
+
+const visiblePinHistories = () =>
+  props.history.pinHistories.filter(
+    (value) =>
+      (props.history.settings.showQMaster || value.name !== "Qm") &&
+      (props.history.settings.showQNot || value.name !== "Q'")
+  )
 </script>
 
 <template>
@@ -56,7 +65,7 @@ const rowHeight = computed(() => {
       fill="url(#grid)"
       stroke="none"
     />
-    <g v-for="(pinHistory, i) in history.pinHistories">
+    <g v-for="(pinHistory, i) in visiblePinHistories()">
       <text
         x="-7.5"
         :y="rowHeight * (i + 0.5)"

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { PropType } from "vue"
-import { historyLength } from "~/scripts/tools/digital-electronics/flip-flop-history"
 import {
   ClockControl,
   FlipFlopSettings,
@@ -78,19 +77,59 @@ const { t } = useI18n()
           </label>
         </li>
       </ul>
+    </div>
+    <div>
       {{ t("flipFlop.history.name") }}:
       <ul>
         <li>
           <label>
-            <input type="checkbox" v-model="settings.showHistory.value" />
+            <input type="checkbox" v-model="settings.timingDiagram.show" />
             {{ t("flipFlop.history.enabled") }}
           </label>
         </li>
-        <li>
+        <li :class="{ [$style.disabled]: !settings.timingDiagram.show }">
           {{ t("flipFlop.history.length") }}:
-          <button @click="historyLength--">-</button>
-          {{ historyLength }}
-          <button @click="historyLength++">+</button>
+          <button
+            @click="settings.timingDiagram.historyLength--"
+            :disabled="!settings.timingDiagram.show"
+          >
+            -
+          </button>
+          {{ settings.timingDiagram.historyLength }}
+          <button
+            @click="settings.timingDiagram.historyLength++"
+            :disabled="!settings.timingDiagram.show"
+          >
+            +
+          </button>
+        </li>
+        <li
+          :class="{
+            [$style.disabled]: !(
+              settings.timingDiagram.show && settings.qMaster.value
+            ),
+          }"
+        >
+          <label>
+            <input
+              type="checkbox"
+              :disabled="
+                !(settings.timingDiagram.show && settings.qMaster.value)
+              "
+              v-model="settings.timingDiagram.showQMaster"
+            />
+            {{ t("flipFlop.history.showQMaster") }}
+          </label>
+        </li>
+        <li :class="{ [$style.disabled]: !settings.timingDiagram.show }">
+          <label>
+            <input
+              type="checkbox"
+              :disabled="!settings.timingDiagram.show"
+              v-model="settings.timingDiagram.showQNot"
+            />
+            {{ t("flipFlop.history.showQNot") }}
+          </label>
         </li>
       </ul>
     </div>
@@ -100,7 +139,7 @@ const { t } = useI18n()
 <style module>
 .settings {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12.5em, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
 
   & label {
     cursor: pointer;
@@ -114,9 +153,13 @@ const { t } = useI18n()
     list-style: none;
   }
 }
-.disabled label {
-  cursor: default;
+
+.disabled {
   color: var(--gray-6);
+  & label,
+  & button {
+    cursor: default;
+  }
 }
 </style>
 
@@ -135,6 +178,8 @@ en:
       name: "Timing diagram"
       enabled: "Show"
       length: "Length"
+      showQMaster: "Show Qm / Q-master"
+      showQNot: "Show Q'"
     settings: "Settings"
     type: "Flip-flop type"
     types:
@@ -156,6 +201,8 @@ de:
       name: "Zeitablaufdiagramm"
       enabled: "Anzeigen"
       length: "Länge"
+      showQMaster: "Qm / Q-master anzeigen"
+      showQNot: "Q' anzeigen"
     settings: "Einstellungen"
     type: "Flip-Flop-Typ"
     types:

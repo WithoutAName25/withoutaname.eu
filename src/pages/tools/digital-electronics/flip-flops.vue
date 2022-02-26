@@ -19,7 +19,7 @@ const history = flipFlop.history
         <FlipFlopDisplay :flip-flop="flipFlop" />
       </DownloadableContent>
     </div>
-    <div v-if="settings.showHistory.value">
+    <div v-if="settings.timingDiagram.show">
       <DownloadableContent type="image/svg+xml" filename="flip-flop.svg">
         <FlipFlopHistory :history="history" />
       </DownloadableContent>
@@ -30,7 +30,7 @@ const history = flipFlop.history
 <style module>
 .output {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
+  grid-template-columns: repeat(auto-fit, minmax(15em, 30em));
   justify-content: center;
 
   & div {

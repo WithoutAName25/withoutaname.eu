@@ -18,19 +18,20 @@ export class FlipFlop {
   readonly iPre = ref(false)
   readonly iClr = ref(false)
 
-  private qNext = ref(false)
+  private qMaster = ref(false)
 
   readonly oQ = ref(false)
   readonly oQNot = ref(true)
 
   readonly pins = new Map<Pos, Ref<Array<FlipFlopPin>>>()
 
-  readonly history: FlipFlopHistory = reactive(
-    new FlipFlopHistory()
-  ) as FlipFlopHistory
+  readonly history: FlipFlopHistory
 
   constructor(settings: FlipFlopSettings) {
     this.settings = settings
+    this.history = reactive(
+      new FlipFlopHistory(this.settings.timingDiagram)
+    ) as FlipFlopHistory
     this.setupDefaults()
     this.watchInputs()
     this.setupPins()
@@ -44,7 +45,7 @@ export class FlipFlop {
       this.iPre.value = false
       this.iClr.value = false
 
-      this.qNext.value = false
+      this.qMaster.value = false
 
       this.oQ.value = false
       this.oQNot.value = true
@@ -54,7 +55,7 @@ export class FlipFlop {
   private watchInputs() {
     watch([this.i0, this.i1, this.iPre, this.iClr], ([, , iPre, iClr]) => {
       if (iPre || iClr) {
-        this.qNext.value = this.iPre.value
+        this.qMaster.value = this.iPre.value
         this.oQ.value = this.iPre.value
         this.oQNot.value = this.iClr.value
       } else if (
@@ -73,15 +74,15 @@ export class FlipFlop {
         this.settings.clockControl.value === ClockControl.DUAL_STATE ||
         this.settings.clockControl.value === ClockControl.DUAL_EDGE
       ) {
-        this.oQ.value = this.qNext.value
-        this.oQNot.value = !this.qNext.value
+        this.oQ.value = this.qMaster.value
+        this.oQNot.value = !this.qMaster.value
       }
     })
   }
 
   private update() {
     if (this.iPre.value || this.iClr.value) {
-      this.qNext.value = this.iPre.value
+      this.qMaster.value = this.iPre.value
       this.oQ.value = this.iPre.value
       this.oQNot.value = this.iClr.value
       return
@@ -106,9 +107,9 @@ export class FlipFlop {
 
   private updateInternal(reset: boolean, set: boolean) {
     if (reset) {
-      this.qNext.value = false
+      this.qMaster.value = false
     } else if (set) {
-      this.qNext.value = true
+      this.qMaster.value = true
     }
     if (
       this.settings.clockControl.value !== ClockControl.DUAL_STATE &&
@@ -118,8 +119,8 @@ export class FlipFlop {
         this.oQ.value = false
         this.oQNot.value = false
       } else {
-        this.oQ.value = this.qNext.value
-        this.oQNot.value = !this.qNext.value
+        this.oQ.value = this.qMaster.value
+        this.oQNot.value = !this.qMaster.value
       }
     }
   }
@@ -184,8 +185,15 @@ export class FlipFlop {
     this.pins.set("bottom", bottom)
     this.pins.set("right", right)
 
+    const pinQMaster = new FlipFlopPin(false, "Qm", this.qMaster)
+
     const allPins = computed(() => {
-      return left.value.concat(top.value, bottom.value, right.value)
+      return left.value.concat(
+        top.value,
+        bottom.value,
+        [pinQMaster],
+        right.value
+      )
     })
     this.history.setPins(allPins)
   }

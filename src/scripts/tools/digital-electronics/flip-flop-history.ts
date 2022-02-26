@@ -1,12 +1,16 @@
 import { Ref, WatchStopHandle } from "vue"
 import { FlipFlopPin } from "~/scripts/tools/digital-electronics/flip-flop-pins"
-
-export const historyLength = ref(5)
+import { TimingDiagramSettings } from "~/scripts/tools/digital-electronics/flip-flop-settings"
 
 export class FlipFlopHistory {
   pinHistories: Array<PinHistory> = []
 
   private watch: WatchStopHandle = () => {}
+  readonly settings: TimingDiagramSettings
+
+  constructor(settings: TimingDiagramSettings) {
+    this.settings = settings
+  }
 
   setPins(pins: Ref<Array<FlipFlopPin> | undefined>) {
     let watchPins = () => {}
@@ -18,7 +22,7 @@ export class FlipFlopHistory {
       if (pins.value !== undefined) {
         for (let i = 0; i < pins.value.length; i++) {
           pinValues.push(pins.value[i].ref)
-          pinHistories.push(new PinHistory(pins.value[i].name))
+          pinHistories.push(new PinHistory(pins.value[i].name, this.settings))
           if (pins.value[i].name === "C") {
             clockId = i
           }
@@ -40,9 +44,11 @@ export class FlipFlopHistory {
 export class PinHistory {
   readonly name: String
   private readonly data: Array<Array<Boolean>>
+  private settings: TimingDiagramSettings
 
-  constructor(name: String) {
+  constructor(name: String, settings: TimingDiagramSettings) {
     this.name = name
+    this.settings = settings
     this.data = reactive(
       new Array<Array<Boolean>>(new Array<Boolean>(name === "Q'"))
     )
@@ -58,9 +64,9 @@ export class PinHistory {
 
   getPolyPoints(x: number, y: number, width: number, height: number): string {
     let s = ""
-    const intervalWidth = width / historyLength.value
-    const startI = historyLength.value - this.data.length
-    for (let i = Math.max(startI, 0); i < historyLength.value; i++) {
+    const intervalWidth = width / this.settings.historyLength
+    const startI = this.settings.historyLength - this.data.length
+    for (let i = Math.max(startI, 0); i < this.settings.historyLength; i++) {
       const intervalData = this.data[i - startI]
       for (let j = 0; j < intervalData.length; j++) {
         const sectionWidth = intervalWidth / intervalData.length
