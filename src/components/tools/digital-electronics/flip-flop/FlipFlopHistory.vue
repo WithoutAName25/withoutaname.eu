@@ -36,6 +36,7 @@ const visiblePinHistories = () =>
     viewBox="-15 -5 100 80"
     fill="none"
     stroke="black"
+    font-family="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif"
     font-size="10"
     aria-label="Flip-flop timing diagram"
   >

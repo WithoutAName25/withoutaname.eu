@@ -63,6 +63,7 @@ function isMasterSlaveSymbol(name: String): boolean {
     viewBox="0 0 100 100"
     fill="none"
     stroke="black"
+    font-family="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif"
     font-size="10"
     aria-label="Flip-flop display"
   >
