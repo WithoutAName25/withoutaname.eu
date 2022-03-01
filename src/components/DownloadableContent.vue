@@ -26,12 +26,12 @@ const props = defineProps({
 
 const wrapper = ref()
 
-function save(id: number) {
+function save(fileType: string, processContent?: (content: string) => string) {
   let content: string = wrapper.value.innerHTML
-  content = props.downloads[id].processContent?.(content) ?? content
+  content = processContent?.(content) ?? content
   saveAs(
     new Blob([content], {
-      type: `${props.downloads[id].fileType};charset=utf-8`,
+      type: `${fileType};charset=utf-8`,
     }),
     props.filename
   )
@@ -39,12 +39,14 @@ function save(id: number) {
 </script>
 
 <template>
-  <slot />
+  <div ref="wrapper">
+    <slot />
+  </div>
   <div :class="$style.downloads">
     <button
       v-for="(download, i) in downloads"
       :class="$style.download"
-      @click="save(i)"
+      @click="save(download.fileType, download.processContent)"
     >
       <Icon icon="mdi-light:download" />
       {{ download.label ?? "Download" }}

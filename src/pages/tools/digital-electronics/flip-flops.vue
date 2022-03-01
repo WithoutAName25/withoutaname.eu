@@ -58,8 +58,8 @@ const downloads: Array<{
 </template>
 
 <style module>
-@media (min-width: 40em) {
-  .twoItems {
+.twoItems {
+  @media (min-width: 40em) {
     --columns: 2;
   }
 }
@@ -74,10 +74,11 @@ const downloads: Array<{
     flex-direction: column;
     place-items: center;
 
-    & > svg {
+    & > div:first-child {
       flex-grow: 1;
       display: grid;
       place-content: center;
+      width: 100%;
     }
   }
 }

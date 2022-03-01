@@ -92,7 +92,6 @@ export class FlipFlop {
 
     let set = this.i0.value
     let reset = this.i1.value
-
     if (type === FlipFlopType.D) {
       reset = !set
     } else if (
@@ -102,10 +101,10 @@ export class FlipFlop {
       set = !this.oQ.value
       reset = this.oQ.value
     }
-    this.updateInternal(reset, set)
+    this.updateInternal(set, reset)
   }
 
-  private updateInternal(reset: boolean, set: boolean) {
+  private updateInternal(set: boolean, reset: boolean) {
     if (reset) {
       this.qMaster.value = false
     } else if (set) {
