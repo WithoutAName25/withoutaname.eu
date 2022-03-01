@@ -35,7 +35,7 @@ const visiblePinHistories = () =>
     :class="$style.svg"
     viewBox="-15 -5 100 80"
     fill="none"
-    stroke="black"
+    data-color-stroke=""
     font-family="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif"
     font-size="10"
     aria-label="Flip-flop timing diagram"
@@ -53,7 +53,7 @@ const visiblePinHistories = () =>
           :class="$style.grid"
           :points="`0,0 0,${rowHeight} ${intervalWidth},${rowHeight} ${intervalWidth},0`"
           fill="none"
-          stroke="#bbb"
+          data-color-stroke-low-contrast=""
           stroke-width="0.5"
         />
       </pattern>
@@ -72,7 +72,7 @@ const visiblePinHistories = () =>
         :y="rowHeight * (i + 0.5)"
         dominant-baseline="middle"
         text-anchor="middle"
-        fill="black"
+        data-color-fill=""
         font-size="9"
       >
         {{ pinHistory.name }}
@@ -86,7 +86,7 @@ const visiblePinHistories = () =>
             rowHeight * 0.5
           )
         "
-        stroke="black"
+        data-color-stroke=""
         fill="none"
       />
     </g>

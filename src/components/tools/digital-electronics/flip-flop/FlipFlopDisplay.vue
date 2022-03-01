@@ -62,7 +62,7 @@ function isMasterSlaveSymbol(name: String): boolean {
     :class="$style.svg"
     viewBox="0 0 100 100"
     fill="none"
-    stroke="black"
+    data-color-stroke=""
     font-family="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif"
     font-size="10"
     aria-label="Flip-flop display"
@@ -116,7 +116,7 @@ function isMasterSlaveSymbol(name: String): boolean {
           )} `"
         />
 
-        <g fill="black" stroke="none">
+        <g data-color-fill="" stroke="none">
           <text
             :x="
               getX(

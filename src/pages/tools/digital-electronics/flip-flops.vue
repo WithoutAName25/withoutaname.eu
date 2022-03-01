@@ -9,18 +9,48 @@ import { FlipFlopSettings } from "~/scripts/tools/digital-electronics/flip-flop-
 const settings = new FlipFlopSettings()
 const flipFlop = new FlipFlop(settings)
 const history = flipFlop.history
+
+const downloads: Array<{
+  label?: string
+  fileType: string
+  processContent?: (content: string) => string
+}> = [
+  {
+    label: "Download (dark)",
+    fileType: "image/svg+xml",
+    processContent: (content) =>
+      content
+        .replaceAll('data-color-fill=""', 'fill="black"')
+        .replaceAll('data-color-stroke=""', 'stroke="black"')
+        .replaceAll('data-color-stroke-low-contrast=""', 'stroke="#bbb"'),
+  },
+  {
+    label: "Download (light)",
+    fileType: "image/svg+xml",
+    processContent: (content) =>
+      content
+        .replaceAll('data-color-fill=""', 'fill="white"')
+        .replaceAll('data-color-stroke=""', 'stroke="white"')
+        .replaceAll('data-color-stroke-low-contrast=""', 'stroke="#555"'),
+  },
+]
 </script>
 
 <template>
   <FlipFlopSettingsMenu :settings="settings" />
-  <div :class="$style.output">
+  <div
+    :class="{
+      [$style.output]: true,
+      [$style.twoItems]: settings.timingDiagram.show,
+    }"
+  >
     <div>
-      <DownloadableContent type="image/svg+xml" filename="flip-flop.svg">
+      <DownloadableContent :downloads="downloads" filename="flip-flop.svg">
         <FlipFlopDisplay :flip-flop="flipFlop" />
       </DownloadableContent>
     </div>
     <div v-if="settings.timingDiagram.show">
-      <DownloadableContent type="image/svg+xml" filename="flip-flop.svg">
+      <DownloadableContent :downloads="downloads" filename="flip-flop.svg">
         <FlipFlopHistory :history="history" />
       </DownloadableContent>
     </div>
@@ -28,14 +58,27 @@ const history = flipFlop.history
 </template>
 
 <style module>
+@media (min-width: 40em) {
+  .twoItems {
+    --columns: 2;
+  }
+}
+
 .output {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15em, 30em));
+  grid-template-columns: repeat(var(--columns, 1), minmax(1em, 30em));
   justify-content: center;
 
-  & div {
-    display: grid;
-    place-content: center;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+
+    & > svg {
+      flex-grow: 1;
+      display: grid;
+      place-content: center;
+    }
   }
 }
 </style>
