@@ -77,12 +77,9 @@ const downloads: Array<{
     & > div:first-child {
       flex-grow: 1;
       display: grid;
+      grid-template-columns: 1fr;
       place-content: center;
       width: 100%;
-
-      & > svg {
-        width: 100%;
-      }
     }
   }
 }
