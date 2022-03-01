@@ -44,7 +44,7 @@ function save(fileType: string, processContent?: (content: string) => string) {
   </div>
   <div :class="$style.downloads">
     <button
-      v-for="(download, i) in downloads"
+      v-for="download in downloads"
       :class="$style.download"
       @click="save(download.fileType, download.processContent)"
     >
