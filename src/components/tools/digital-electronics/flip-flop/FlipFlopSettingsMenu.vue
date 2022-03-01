@@ -36,7 +36,15 @@ const { t } = useI18n()
     <div>
       {{ t("flipFlop.clockControl") }}:
       <ul>
-        <li v-for="type in ClockControl">
+        <li
+          v-for="type in ClockControl"
+          :class="{
+            [$style.disabled]:
+              type !== ClockControl.EDGE &&
+              type !== ClockControl.DUAL_EDGE &&
+              !settings.nonEdgeClockControlAllowed.value,
+          }"
+        >
           <label>
             <input
               type="radio"
