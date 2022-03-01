@@ -79,6 +79,10 @@ const downloads: Array<{
       display: grid;
       place-content: center;
       width: 100%;
+
+      & > svg {
+        width: 100%;
+      }
     }
   }
 }
