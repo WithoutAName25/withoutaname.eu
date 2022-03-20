@@ -1,0 +1,19 @@
+comment:
+  layout: diff, flag, files
+  require_changes: true
+coverage:
+  range: 60.0...85.0
+  status:
+    patch:
+      default:
+        target: 0.0
+    project:
+      default:
+        target: 0.0
+flags:
+  e2e:
+    paths:
+      - src/
+  unit:
+    paths:
+      - src/
