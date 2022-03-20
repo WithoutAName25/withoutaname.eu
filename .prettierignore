@@ -1,6 +1,6 @@
-.idea/
+.*
 dist
 node_modules
+coverage*
 src/auto-imports.d.ts
-src/components.d.ts
 pnpm-lock.yaml

@@ -9,6 +9,7 @@ import AutoImport from "unplugin-auto-import/vite"
 import { defineConfig } from "vite"
 import Markdown from "vite-plugin-md"
 import Pages from "vite-plugin-pages"
+import istanbul from "vite-plugin-istanbul"
 // import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
@@ -33,6 +34,10 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     legacy(),
+    istanbul({
+      requireEnv: true,
+      include: "src/*",
+    }),
     Pages({
       extensions: ["vue", "md"],
     }),
@@ -90,6 +95,12 @@ export default defineConfig({
     exclude: ["vue-demi"],
   },
   test: {
+    coverage: {
+      all: true,
+      include: ["src"],
+      reporter: ["text", "json"],
+      clean: true,
+    },
     include: ["test/**/*.test.ts"],
     environment: "jsdom",
     deps: {
