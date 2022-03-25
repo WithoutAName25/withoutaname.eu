@@ -1,4 +1,3 @@
-// @ts-ignore
 import vueI18n from "@intlify/vite-plugin-vue-i18n"
 import legacy from "@vitejs/plugin-legacy"
 import Vue from "@vitejs/plugin-vue"
@@ -9,8 +8,8 @@ import AutoImport from "unplugin-auto-import/vite"
 import { defineConfig } from "vite"
 import Markdown from "vite-plugin-md"
 import Pages from "vite-plugin-pages"
+import generateSitemap from "vite-ssg-sitemap"
 import istanbul from "vite-plugin-istanbul"
-// import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
   css: {
@@ -69,7 +68,6 @@ export default defineConfig({
     //     name: "WithoutAName",
     //   },
     //   workbox: {
-    //     dontCacheBustURLsMatching
     //     globIgnores: ["/maven**"],
     //     navigateFallbackDenylist: [/^\/maven/],
     //   },
@@ -89,10 +87,18 @@ export default defineConfig({
       paths.push("/not-found")
       return paths
     },
+    onFinished() {
+      generateSitemap({
+        hostname: "https://withoutaname.eu",
+      })
+    },
   },
   optimizeDeps: {
     include: ["vue", "vue-router", "@vueuse/core", "@vueuse/head"],
     exclude: ["vue-demi"],
+  },
+  build: {
+    sourcemap: true,
   },
   test: {
     coverage: {
