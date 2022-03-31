@@ -8,6 +8,7 @@ import AutoImport from "unplugin-auto-import/vite"
 import { defineConfig } from "vite"
 import Markdown from "vite-plugin-md"
 import Pages from "vite-plugin-pages"
+import { VitePWA } from "vite-plugin-pwa"
 import generateSitemap from "vite-ssg-sitemap"
 import istanbul from "vite-plugin-istanbul"
 
@@ -62,16 +63,12 @@ export default defineConfig({
         })
       },
     }),
-    // VitePWA({
-    //   registerType: "autoUpdate",
-    //   manifest: {
-    //     name: "WithoutAName",
-    //   },
-    //   workbox: {
-    //     globIgnores: ["/maven**"],
-    //     navigateFallbackDenylist: [/^\/maven/],
-    //   },
-    // }),
+    VitePWA({
+      registerType: "autoUpdate",
+      manifest: {
+        name: "WithoutAName",
+      },
+    }),
 
     vueI18n({
       runtimeOnly: true,
@@ -79,14 +76,8 @@ export default defineConfig({
     }),
   ],
   ssgOptions: {
-    dirStyle: "nested",
     formatting: "minify",
     script: undefined,
-    includedRoutes: (paths) => {
-      paths = paths.filter((path) => !path.includes(":") && !path.includes("*"))
-      paths.push("/not-found")
-      return paths
-    },
     onFinished() {
       generateSitemap({
         hostname: "https://withoutaname.eu",

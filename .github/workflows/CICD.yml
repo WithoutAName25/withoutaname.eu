@@ -172,10 +172,12 @@ jobs:
         run: pnpm run build
 
       - name: Deploy files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        uses: Burnett01/rsync-deployments@5.2
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /var/www/withoutaname/
+          switches: -avz --delete
+          path: dist/
+          remote_path: ${{ secrets.DEPLOY_PATH }}
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_port: ${{ secrets.DEPLOY_PORT }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
