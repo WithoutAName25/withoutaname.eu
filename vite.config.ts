@@ -68,6 +68,9 @@ export default defineConfig({
       manifest: {
         name: "WithoutAName",
       },
+      workbox: {
+        cleanupOutdatedCaches: true,
+      },
     }),
 
     vueI18n({
