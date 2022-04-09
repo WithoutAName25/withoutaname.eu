@@ -22,8 +22,10 @@ watch(useRoute(), () => {
       </div>
       <ul :class="$style.navigation" :data-expanded="expanded">
         <MainNavItem href="/">Home</MainNavItem>
-        <MainNavItem href="/maven/" external>Maven</MainNavItem>
         <MainNavItem href="/tools" include-sublinks>Tools</MainNavItem>
+        <MainNavItem href="https://repo.withoutaname.eu" external
+          >Repo</MainNavItem
+        >
       </ul>
     </nav>
   </OnClickOutside>
@@ -80,7 +82,7 @@ watch(useRoute(), () => {
     }
   }
   @media (width >= 35em) {
-    padding: 0.5rem 2rem;
+    padding: 0.5em 1.5em;
   }
 }
 </style>

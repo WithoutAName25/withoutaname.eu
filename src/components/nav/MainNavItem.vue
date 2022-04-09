@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue"
+
 const props = defineProps({
   external: {
     default: false,
@@ -26,11 +28,20 @@ if (props.includeSublinks) {
 
 <template>
   <li :class="$style.element">
-    <a :href="href" v-if="external || !href">
-      <slot />
+    <a :class="$style.link" :href="href" v-if="external || !href">
+      <slot /><Icon
+        :class="$style.icon"
+        v-if="external"
+        icon="line-md:external-link"
+        style="display: inline-block"
+        inline="true"
+      />
     </a>
     <router-link
-      :class="{ 'router-sublink-active': routerLinkActiveSublink }"
+      :class="{
+        [$style.link]: true,
+        'router-sublink-active': routerLinkActiveSublink,
+      }"
       :to="href"
       v-else
     >
@@ -43,31 +54,42 @@ if (props.includeSublinks) {
 .element {
   color: inherit;
   cursor: pointer;
+
   &:hover {
     color: var(--brand);
   }
-  & a {
-    color: inherit;
-    text-decoration: none;
-    position: relative;
+}
+
+.link,
+.link:visited {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  width: max-content;
+
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    background: var(--brand);
+    height: 0.1em;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    transition: left 0.5s, right 0.5s;
+  }
+
+  &:global(.router-link-active),
+  &:global(.router-sublink-active) {
     &::after {
-      content: "";
-      position: absolute;
-      display: block;
-      background: var(--brand);
-      height: 0.1em;
-      bottom: 0;
-      left: 50%;
-      right: 50%;
-      transition: left 0.5s, right 0.5s;
-    }
-    &:global(.router-link-active),
-    &:global(.router-sublink-active) {
-      &::after {
-        left: 0.25em;
-        right: 0.25em;
-      }
+      left: 0.25em;
+      right: 0.25em;
     }
   }
+}
+
+.icon {
+  opacity: 0.5;
 }
 </style>

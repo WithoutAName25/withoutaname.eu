@@ -15,6 +15,7 @@ import MainNav from "~/components/nav/MainNav.vue"
 <style module>
 .bar {
   display: flex;
+  height: 4rem;
   align-items: center;
   justify-content: space-between;
   background: var(--surface-2);
@@ -25,7 +26,8 @@ import MainNav from "~/components/nav/MainNav.vue"
   color: var(--text-1);
 }
 .logo {
-  margin: 1rem;
+  box-sizing: content-box;
   width: 2rem;
+  padding-inline: 1em;
 }
 </style>
