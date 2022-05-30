@@ -19,7 +19,7 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2.2.2
         with:
           run_install: true
 
@@ -37,7 +37,7 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2.2.2
         with:
           run_install: true
 
@@ -64,7 +64,7 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2.2.2
         with:
           run_install: true
 
@@ -91,7 +91,7 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2.2.2
         with:
           run_install: true
 
@@ -124,7 +124,7 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2.2.2
         with:
           run_install: true
 
@@ -158,7 +158,7 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2.2.2
         with:
           run_install: true
 
