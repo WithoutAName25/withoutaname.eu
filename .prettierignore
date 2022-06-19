@@ -1,6 +1,5 @@
-.*
-dist
+/.*
 node_modules
-coverage*
-src/auto-imports.d.ts
+/build
+*.txt
 pnpm-lock.yaml
