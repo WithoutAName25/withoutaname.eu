@@ -1,34 +1,52 @@
 {
-	"private": true,
-	"packageManager": "pnpm@7.3.0",
-	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit build",
-		"package": "svelte-kit package",
-		"preview": "svelte-kit preview",
-		"prepare": "svelte-kit sync",
-		"test": "playwright test",
-		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
-		"format": "prettier --write --plugin-search-dir=. ."
-	},
-	"devDependencies": {
-		"@playwright/test": "^1.22.2",
-		"@sveltejs/adapter-vercel": "next",
-		"@sveltejs/kit": "next",
-		"@typescript-eslint/eslint-plugin": "^5.27.0",
-		"@typescript-eslint/parser": "^5.27.0",
-		"eslint": "^8.16.0",
-		"eslint-config-prettier": "^8.3.0",
-		"eslint-plugin-svelte3": "^4.0.0",
-		"prettier": "^2.6.2",
-		"prettier-plugin-svelte": "^2.7.0",
-		"svelte": "^3.44.0",
-		"svelte-check": "^2.7.1",
-		"svelte-preprocess": "^4.10.6",
-		"tslib": "^2.3.1",
-		"typescript": "^4.7.2"
-	},
-	"type": "module"
+  "private": true,
+  "packageManager": "pnpm@7.3.0",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "pnpm run lint && pnpm run check && svelte-kit build",
+    "preview": "svelte-kit preview",
+    "test": "playwright test",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+    "format": "prettier --write --plugin-search-dir=. ."
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "maintained node versions"
+  ],
+  "dependencies": {
+    "nprogress": "^0.2.0"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.1.36",
+    "@iconify-json/mdi": "^1.1.24",
+    "@playwright/test": "^1.22.2",
+    "@sveltejs/adapter-vercel": "1.0.0-next.59",
+    "@sveltejs/kit": "1.0.0-next.354",
+    "@types/nprogress": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "autoprefixer": "^10.4.7",
+    "browserslist": "^4.21.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "open-props": "^1.3.16",
+    "pnpm": "^7.3.0",
+    "postcss": "^8.4.14",
+    "postcss-jit-props": "^1.0.7",
+    "postcss-preset-env": "^7.7.2",
+    "prettier": "^2.7.1",
+    "prettier-plugin-svelte": "^2.7.0",
+    "sass": "^1.53.0",
+    "svelte": "^3.48.0",
+    "svelte-check": "^2.8.0",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4",
+    "unplugin-icons": "^0.14.5"
+  },
+  "type": "module"
 }
