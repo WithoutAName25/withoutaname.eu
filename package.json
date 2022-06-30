@@ -3,7 +3,7 @@
   "packageManager": "pnpm@7.3.0",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "pnpm run lint && pnpm run check && svelte-kit build",
+    "build": "pnpm run check && svelte-kit build",
     "preview": "svelte-kit preview",
     "test": "playwright test",
     "check": "svelte-check --tsconfig ./tsconfig.json",
