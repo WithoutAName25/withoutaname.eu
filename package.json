@@ -17,6 +17,7 @@
     "maintained node versions"
   ],
   "dependencies": {
+    "file-saver": "^2.0.5",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "@playwright/test": "^1.22.2",
     "@sveltejs/adapter-vercel": "1.0.0-next.59",
     "@sveltejs/kit": "1.0.0-next.354",
+    "@types/file-saver": "^2.0.5",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",

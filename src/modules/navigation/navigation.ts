@@ -36,5 +36,8 @@ export class NavGroupData {
 
 export const navigationData = new NavigationData([
   new NavLinkData("Home", "/"),
+  new NavGroupData("Tools", "/tools", [
+    new NavLinkData("FlipFlops", "/tools/digital-electronics/flip-flops"),
+  ]),
   new NavLinkData("Repo", "https://repo.withoutaname.eu"),
 ])
