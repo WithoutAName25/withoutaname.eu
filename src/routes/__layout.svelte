@@ -3,7 +3,7 @@
   import { afterNavigate, beforeNavigate } from "$app/navigation"
   import NProgress from "nprogress"
   import Header from "../components/Header.svelte"
-  import "../css/main.scss"
+  import "../css/main.pcss"
 
   let preferredColorScheme = "dark"
 
