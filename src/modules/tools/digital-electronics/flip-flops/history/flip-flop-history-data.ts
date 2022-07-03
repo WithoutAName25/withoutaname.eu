@@ -6,9 +6,9 @@ import type { HistorySettings } from "../flip-flop-settings"
 export class FlipFlopHistoryData {
   readonly pinHistories = writable<PinHistoryData[]>([])
 
-  private unsubscribe: Unsubscriber = () => {}
-  private unsubscribeInput: Unsubscriber = () => {}
-  private unsubscribeOutput: Unsubscriber = () => {}
+  private unsubscribe: Unsubscriber = () => undefined
+  private unsubscribeInput: Unsubscriber = () => undefined
+  private unsubscribeOutput: Unsubscriber = () => undefined
   readonly settings: HistorySettings
 
   constructor(settings: HistorySettings) {
@@ -26,8 +26,8 @@ export class FlipFlopHistoryData {
       let clockId = -1
       if ($pins !== undefined) {
         for (let i = 0; i < $pins.length; i++) {
-          let pin = $pins[i]
-          let pinHistoryData = new PinHistoryData(pin.name, this.settings)
+          const pin = $pins[i]
+          const pinHistoryData = new PinHistoryData(pin.name, this.settings)
           if (pin.isInput) {
             inputPinValues.push(pin.value)
             inputPinHistories.push(pinHistoryData)
@@ -75,11 +75,11 @@ export class FlipFlopHistoryData {
 }
 
 export class PinHistoryData {
-  readonly name: String
+  readonly name: string
   private settings: HistorySettings
   private readonly data: Writable<boolean[][]>
 
-  constructor(name: String, settings: HistorySettings) {
+  constructor(name: string, settings: HistorySettings) {
     this.name = name
     this.settings = settings
     this.data = writable([])

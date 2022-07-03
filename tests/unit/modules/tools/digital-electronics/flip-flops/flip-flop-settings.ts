@@ -10,7 +10,7 @@ describe("Test flip-flop settings", () => {
   it("should switch to edge control", () => {
     const flipFlopSettings = new FlipFlopSettings()
     flipFlopSettings.flipFlopType.set(FlipFlopType.JK)
-    let clockControl = get(flipFlopSettings.clockControl)
+    const clockControl = get(flipFlopSettings.clockControl)
     expect(
       clockControl === ClockControl.EDGE ||
         clockControl === ClockControl.DUAL_EDGE

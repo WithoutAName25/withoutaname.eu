@@ -144,5 +144,8 @@ jobs:
           node-version: 18.x
           registry-url: https://registry.npmjs.org/
 
+      - name: Setup playwright
+        run: pnpm run playwright:install
+
       - name: Test
         run: pnpm run test:e2e
