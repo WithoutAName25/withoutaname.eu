@@ -1,6 +1,7 @@
-.idea/
-dist
+.idea
 node_modules
-coverage*
-.nyc_output
-cypress/screenshots
+build
+coverage
+.svelte-kit/*
+!.svelte-kit/tsconfig.json
+.vercel_build_output
