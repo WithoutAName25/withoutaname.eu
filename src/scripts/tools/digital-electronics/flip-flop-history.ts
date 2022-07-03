@@ -16,7 +16,7 @@ export class FlipFlopHistory {
     let watchPins = () => {}
     this.watch()
     this.watch = watchEffect(() => {
-      const pinValues = new Array<Ref<Boolean>>()
+      const pinValues = new Array<Ref<boolean>>()
       const pinHistories = new Array<PinHistory>()
       let clockId = -1
       if (pins.value !== undefined) {
@@ -42,21 +42,21 @@ export class FlipFlopHistory {
 }
 
 export class PinHistory {
-  readonly name: String
-  private readonly data: Array<Array<Boolean>>
+  readonly name: string
+  private readonly data: Array<Array<boolean>>
   private settings: TimingDiagramSettings
 
-  constructor(name: String, settings: TimingDiagramSettings) {
+  constructor(name: string, settings: TimingDiagramSettings) {
     this.name = name
     this.settings = settings
     this.data = reactive(
-      new Array<Array<Boolean>>(new Array<Boolean>(name === "Q'"))
+      new Array<Array<boolean>>(new Array<boolean>(name === "Q'"))
     )
   }
 
-  push(value: Boolean, newInterval: Boolean) {
+  push(value: boolean, newInterval: boolean) {
     if (newInterval) {
-      this.data.push(new Array<Boolean>(value))
+      this.data.push(new Array<boolean>(value))
     } else {
       this.data[this.data.length - 1].push(value)
     }

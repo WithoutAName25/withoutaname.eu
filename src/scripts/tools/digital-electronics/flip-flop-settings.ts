@@ -38,12 +38,12 @@ export class FlipFlopSettings {
       this.clockControl.value === ClockControl.DUAL_EDGE
   )
 
-  readonly nonEdgeClockControlAllowed: Ref<Boolean> = computed(
+  readonly nonEdgeClockControlAllowed: Ref<boolean> = computed(
     () =>
       this.flipFlopType.value === FlipFlopType.RS ||
       this.flipFlopType.value === FlipFlopType.D
   )
-  readonly preClearAllowed: Ref<Boolean> = computed(
+  readonly preClearAllowed: Ref<boolean> = computed(
     () => this.clockControl.value !== ClockControl.NONE
   )
 
