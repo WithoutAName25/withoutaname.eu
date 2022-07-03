@@ -4,17 +4,17 @@ import { SudokuGrid } from "../../../../../src/modules/games/sudoku/grid"
 
 describe("Sudoku grid", () => {
   test("rows and columns arrays should have the correct length", () => {
-    let width = 4
-    let height = 2
+    const width = 4
+    const height = 2
     const grid = new SudokuGrid(width, height)
 
-    let rows = grid.rows
+    const rows = grid.rows
     expect(rows.length).toBe(height)
     for (const row of rows) {
       expect(row.length).toBe(width)
     }
 
-    let columns = grid.columns
+    const columns = grid.columns
     expect(columns.length).toBe(width)
     for (const column of columns) {
       expect(column.length).toBe(height)
@@ -47,13 +47,13 @@ describe("Sudoku grid", () => {
     function shouldHaveCorrectSize(
       diagonals: readonly (readonly SudokuField[])[]
     ) {
-      expect(positiveDiagonals.length).toBe(6)
-      expect(positiveDiagonals[0].length).toBe(1)
-      expect(positiveDiagonals[1].length).toBe(2)
-      expect(positiveDiagonals[2].length).toBe(3)
-      expect(positiveDiagonals[3].length).toBe(3)
-      expect(positiveDiagonals[4].length).toBe(2)
-      expect(positiveDiagonals[5].length).toBe(1)
+      expect(diagonals.length).toBe(6)
+      expect(diagonals[0].length).toBe(1)
+      expect(diagonals[1].length).toBe(2)
+      expect(diagonals[2].length).toBe(3)
+      expect(diagonals[3].length).toBe(3)
+      expect(diagonals[4].length).toBe(2)
+      expect(diagonals[5].length).toBe(1)
     }
 
     const positiveDiagonals = grid.positiveDiagonals

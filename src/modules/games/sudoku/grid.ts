@@ -32,7 +32,7 @@ export class SudokuGrid {
       negativeDiagonals.push(new Array(length))
 
       for (let j = 0; j < length; j++) {
-        let x = Math.max(0, i - (height - 1)) + j
+        const x = Math.max(0, i - (height - 1)) + j
         positiveDiagonals[i][j] = columns[x][Math.min(i, height - 1) - j]
         negativeDiagonals[i][j] = columns[x][Math.max(0, height - 1 - i) + j]
       }
