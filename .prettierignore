@@ -1,6 +1,6 @@
-/.*
+.*
 node_modules
-/build
+build
+coverage
 *.txt
 pnpm-lock.yaml
-.svelte-kit

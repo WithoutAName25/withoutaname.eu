@@ -1,6 +1,7 @@
 .idea
 node_modules
 build
+coverage
 .svelte-kit/*
 !.svelte-kit/tsconfig.json
 .vercel_build_output

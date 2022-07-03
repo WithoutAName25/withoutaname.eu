@@ -41,6 +41,14 @@ const config = {
           scale: 1,
         }),
       ],
+      test: {
+        coverage: {
+          all: true,
+          src: ["src"],
+          reporter: ["json", "text", "text-summary"],
+        },
+        include: ["tests/unit/**/*.ts"],
+      },
     },
   },
 }
