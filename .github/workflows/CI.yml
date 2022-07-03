@@ -145,7 +145,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Setup playwright
-        run: pnpm run playwright:install
+        run: pnpm run playwright:install:withDebs
 
       - name: Test
         run: pnpm run test:e2e

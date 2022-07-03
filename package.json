@@ -6,6 +6,7 @@
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "playwright:install": "playwright install",
+    "playwright:install:withDebs": "playwright install --with-deps",
     "test:e2e": "playwright test",
     "test:unit:watch": "vitest watch",
     "test:unit:ci": "vitest run --coverage",
