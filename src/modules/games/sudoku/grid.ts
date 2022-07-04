@@ -8,7 +8,7 @@ export class SudokuGrid {
   negativeDiagonal: readonly SudokuField[] | undefined
   negativeDiagonals: readonly (readonly SudokuField[])[]
 
-  constructor(width: number, height: number) {
+  constructor(width = 9, height = 9) {
     const rows: SudokuField[][] = new Array(height)
       .fill(0)
       .map(() => new Array(width))
