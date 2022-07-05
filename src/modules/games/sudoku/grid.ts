@@ -1,5 +1,17 @@
 import { SudokuField } from "./field"
 
+export const DEFAULT_ALLOWED_VALUES: ReadonlySet<string> = new Set([
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+])
+
 export class SudokuGrid {
   rows: readonly (readonly SudokuField[])[]
   columns: readonly (readonly SudokuField[])[]
@@ -8,19 +20,15 @@ export class SudokuGrid {
   negativeDiagonal: readonly SudokuField[] | undefined
   negativeDiagonals: readonly (readonly SudokuField[])[]
 
-  constructor(width = 9, height = 9) {
-    const rows: SudokuField[][] = new Array(height)
-      .fill(0)
-      .map(() => new Array(width))
-    const columns: SudokuField[][] = new Array(width)
-      .fill(0)
-      .map(() => new Array(height))
+  constructor(width = 9, height = 9, allowedValues = DEFAULT_ALLOWED_VALUES) {
+    const rows: SudokuField[][] = Array.from({ length: height }, () => [])
+    const columns: SudokuField[][] = Array.from({ length: width }, () => [])
     const positiveDiagonals: SudokuField[][] = []
     const negativeDiagonals: SudokuField[][] = []
 
     for (let x = 0; x < width; x++) {
       for (let y = 0; y < height; y++) {
-        const field = new SudokuField()
+        const field = new SudokuField(allowedValues)
         rows[y][x] = field
         columns[x][y] = field
       }
