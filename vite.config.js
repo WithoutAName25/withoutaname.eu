@@ -4,9 +4,9 @@ import open_props from "open-props"
 import postcss_jit_props from "postcss-jit-props"
 import postcssPresetEnv from "postcss-preset-env"
 import Icons from "unplugin-icons/vite"
+import { defineConfig } from "vitest/config"
 
-/** @type {import('vite').UserConfig} */
-const config = {
+export default defineConfig({
   plugins: [
     sveltekit(),
     Icons({
@@ -31,6 +31,12 @@ const config = {
       ],
     },
   },
-}
-
-export default config
+  test: {
+    coverage: {
+      all: true,
+      src: ["src"],
+      reporter: ["json", "text", "text-summary"],
+    },
+    include: ["tests/unit/**/*.ts"],
+  },
+})
