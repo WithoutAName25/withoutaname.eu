@@ -1,3 +1,12 @@
-import { extractFromSvelteConfig } from "vitest-svelte-kit"
+import type { UserConfig } from "vitest"
 
-export default extractFromSvelteConfig()
+const config: UserConfig = {
+  coverage: {
+    all: true,
+    src: ["src"],
+    reporter: ["json", "text", "text-summary"],
+  },
+  include: ["tests/unit/**/*.ts"],
+}
+
+export default config

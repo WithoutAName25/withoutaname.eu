@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
   webServer: {
     command: "pnpm run build && pnpm run preview",
     reuseExistingServer: true,
-    port: 3000,
+    port: 4173,
   },
   projects: [
     {
