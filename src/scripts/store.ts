@@ -1,4 +1,3 @@
-import { throwError } from "svelte-preprocess/dist/modules/errors"
 import type { Readable, Subscriber, Unsubscriber } from "svelte/store"
 import { derived } from "svelte/store"
 
@@ -29,8 +28,11 @@ export class DynamicDerived<T, V, R> implements Readable<R> {
         }
       )
     })
-    this.value =
-      initialValue ?? throwError("subscribe should call callback immediately")
+
+    // initialise value
+    if (initialValue === undefined)
+      throw new Error("subscribe should call callback immediately")
+    this.value = initialValue
   }
 
   subscribe(subscriber: Subscriber<R>): Unsubscriber {
