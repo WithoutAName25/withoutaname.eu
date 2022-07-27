@@ -14,3 +14,34 @@ export function isSetEqual<T>(
   }
   return true
 }
+
+export function applyToAllCombinations<T>(
+  array: T[],
+  k: number,
+  callback: (value: T[]) => void
+) {
+  internalApplyToAllCombinations(array, k, callback, [], 0)
+}
+
+function internalApplyToAllCombinations<T>(
+  array: T[],
+  k: number,
+  callback: (value: T[]) => void,
+  selected: T[],
+  startIndex: number
+) {
+  if (selected.length === k) {
+    callback(selected)
+    return
+  }
+
+  for (let i = startIndex; i <= array.length - k + selected.length; i++) {
+    internalApplyToAllCombinations(
+      array,
+      k,
+      callback,
+      [...selected, array[i]],
+      i + 1
+    )
+  }
+}

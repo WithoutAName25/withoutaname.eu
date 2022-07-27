@@ -39,5 +39,8 @@ export const navigationData = new NavigationData([
   new NavGroupData("Tools", "/tools", [
     new NavLinkData("FlipFlops", "/tools/digital-electronics/flip-flops"),
   ]),
+  new NavGroupData("Games", "/games", [
+    new NavLinkData("Sudoku", "/games/sudoku"),
+  ]),
   new NavLinkData("Repo", "https://repo.withoutaname.eu"),
 ])

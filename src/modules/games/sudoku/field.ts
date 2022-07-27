@@ -5,14 +5,15 @@ import { isSetEqual } from "../../../scripts/utils"
 import { DEFAULT_ALLOWED_VALUES } from "./grid"
 
 export class SudokuField {
-  constructor(private readonly allowedValues = DEFAULT_ALLOWED_VALUES) {}
+  constructor(readonly allowedValues = DEFAULT_ALLOWED_VALUES) {}
 
-  readonly value: Writable<string | null> = writable(null)
+  readonly value: Writable<string | undefined> = writable(undefined)
+  readonly forcedValues: Writable<Readable<ForcedValue>[]> = writable([])
   readonly excludedValuesPerConstraint = writable<
     Readable<ReadonlySet<string>>[]
   >([
     derived(this.value, ($value) => {
-      if ($value === null) return new Set<string>()
+      if ($value === undefined) return new Set<string>()
 
       const excludedValues = new Set(this.allowedValues)
       excludedValues.delete($value)
@@ -36,4 +37,8 @@ export class SudokuField {
     },
     isSetEqual
   )
+}
+
+export class ForcedValue {
+  constructor(readonly value: string, readonly possibleFields: SudokuField[]) {}
 }

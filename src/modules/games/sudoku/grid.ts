@@ -20,7 +20,11 @@ export class SudokuGrid {
   negativeDiagonal: readonly SudokuField[] | undefined
   negativeDiagonals: readonly (readonly SudokuField[])[]
 
-  constructor(width = 9, height = 9, allowedValues = DEFAULT_ALLOWED_VALUES) {
+  constructor(
+    readonly width = 9,
+    readonly height = 9,
+    readonly allowedValues = DEFAULT_ALLOWED_VALUES
+  ) {
     const rows: SudokuField[][] = Array.from({ length: height }, () => [])
     const columns: SudokuField[][] = Array.from({ length: width }, () => [])
     const positiveDiagonals: SudokuField[][] = []
