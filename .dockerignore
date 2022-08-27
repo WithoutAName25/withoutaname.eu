@@ -8,3 +8,6 @@ coverage
 build
 .dockerignore
 Dockerfile
+LICENSE
+README.md
+vercel.json
