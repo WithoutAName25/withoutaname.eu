@@ -9,12 +9,7 @@ const config = {
   preprocess: preprocess(),
 
   kit: {
-    adapter:
-      process.env.VERCEL === "true"
-        ? vercel({
-            edge: true,
-          })
-        : adapterNode(),
+    adapter: process.env.VERCEL === "true" ? vercel() : adapterNode(),
     prerender: {
       default: true,
     },

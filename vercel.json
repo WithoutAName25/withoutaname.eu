@@ -3,9 +3,5 @@
     "silent": true
   },
   "public": true,
-  "build": {
-    "env": {
-      "VERCEL": "true"
-    }
-  }
+  "buildCommand": "VERCEL=true vite build"
 }

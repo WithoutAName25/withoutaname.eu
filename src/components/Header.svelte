@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/env"
+  import { browser } from "$app/environment"
   import HomeIcon from "~icons/mdi/home"
   import NavDesktop from "../modules/navigation/NavDesktop.svelte"
   import NavMobile from "../modules/navigation/NavMobile.svelte"
