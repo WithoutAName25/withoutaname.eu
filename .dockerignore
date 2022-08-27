@@ -1,8 +1,10 @@
 .idea
-node_modules
-build
-coverage
+.github
 .svelte-kit/*
 !.svelte-kit/tsconfig.json
 .vercel
+node_modules
+coverage
+build
+.dockerignore
 Dockerfile
