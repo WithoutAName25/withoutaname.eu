@@ -1,4 +1,4 @@
-name: Build
+name: CI
 
 on:
   push:
@@ -6,146 +6,69 @@ on:
   pull_request:
 
 jobs:
-  installDependencies:
+  base:
+    name: Build base image;
     runs-on: ubuntu-latest
+    steps:
+      - name: Build and push
+        uses: ./.github/workflows/docker.yml
+        with:
+          push: false
+          target: base
+          tags: withoutaname/withoutaname.eu:base
+
+  checks:
+    strategy:
+      matrix:
+        target: [lint, check, e2etest, build]
+    name: Build ${{ matrix.target }} image
+    runs-on: ubuntu-latest
+    needs: base
+    steps:
+      - name: Build and push
+        uses: ./.github/workflows/docker.yml
+        with:
+          push: false
+          target: ${{ matrix.target }}
+          tags: withoutaname/withoutaname.eu:${{ matrix.target }}
+
+  publish:
+    name: Build and push final image
+    runs-on: ubuntu-latest
+    needs: [base, checks]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
+      - name: Get current version
+        id: version
+        run: |
+          VERSION=$(expr match "$(git tag --points-at HEAD)" '.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*')
+          TAGS=withoutaname/withoutaname.eu:latest
+          [ ! -z $VERSION ] && TAGS="$TAGS,withoutaname/withoutaname.eu:$VERSION"
+          echo "::set-output name=value::$TAGS"
+      - name: Build and push
+        uses: ./.github/workflows/docker.yml
         with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          run_install: true
-
-  lint:
-    runs-on: ubuntu-latest
-    needs: installDependencies
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          run_install: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 18.x
-          registry-url: https://registry.npmjs.org/
-
-      - name: Lint code
-        run: pnpm run lint
-
-  build:
-    runs-on: ubuntu-latest
-    needs: installDependencies
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          run_install: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 18.x
-          registry-url: https://registry.npmjs.org/
-
-      - name: Build
-        run: pnpm run build
+          push: true
+          target: final
+          tags: ${{ steps.version.outputs.value }}
 
   unit:
+    name: Test and upload coverage
     runs-on: ubuntu-latest
-    needs: installDependencies
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          run_install: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 18.x
-          registry-url: https://registry.npmjs.org/
+      - name: Setup Bun
+        uses: antongolub/action-setup-bun@v1
 
       - name: Test
-        run: pnpm run test:unit:ci
+        run: bun run test:unit:ci
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
           flags: unit
           files: ./coverage/coverage-final.json
-
-  e2e:
-    runs-on: ubuntu-latest
-    needs: installDependencies
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          run_install: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 18.x
-          registry-url: https://registry.npmjs.org/
-
-      - name: Setup playwright
-        run: pnpm run playwright:install:withDebs
-
-      - name: Test
-        run: pnpm run test:e2e
