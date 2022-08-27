@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/env"
+  import { browser } from "$app/environment"
   import { afterNavigate, beforeNavigate } from "$app/navigation"
   import NProgress from "nprogress"
   import Header from "../components/Header.svelte"

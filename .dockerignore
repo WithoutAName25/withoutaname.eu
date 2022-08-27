@@ -1,0 +1,13 @@
+.idea
+.github
+.svelte-kit/*
+!.svelte-kit/tsconfig.json
+.vercel
+node_modules
+coverage
+build
+.dockerignore
+Dockerfile
+LICENSE
+README.md
+vercel.json

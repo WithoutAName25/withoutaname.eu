@@ -1,4 +1,5 @@
-import adapter from "@sveltejs/adapter-vercel"
+import adapterNode from "@sveltejs/adapter-node"
+import vercel from "@sveltejs/adapter-vercel"
 import preprocess from "svelte-preprocess"
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,9 +9,7 @@ const config = {
   preprocess: preprocess(),
 
   kit: {
-    adapter: adapter({
-      edge: true,
-    }),
+    adapter: process.env.VERCEL === "true" ? vercel() : adapterNode(),
     prerender: {
       default: true,
     },
