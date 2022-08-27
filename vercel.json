@@ -2,7 +2,5 @@
   "github": {
     "silent": true
   },
-  "public": true,
-  "installCommand": "yarn install",
-  "buildCommand": "VERCEL=true yarn run build"
+  "public": true
 }
