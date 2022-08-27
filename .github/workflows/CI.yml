@@ -40,7 +40,9 @@ jobs:
       - name: Get current version
         id: version
         run: |
+          echo "Getting version..."
           VERSION=$(expr match "$(git tag --points-at HEAD)" '.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*')
+          [ -z ] && echo "No version found" || echo "Current version is $VERSION"
           TAGS=withoutaname/withoutaname.eu:latest
           [ ! -z $VERSION ] && TAGS="$TAGS,withoutaname/withoutaname.eu:$VERSION"
           echo "::set-output name=value::$TAGS"
