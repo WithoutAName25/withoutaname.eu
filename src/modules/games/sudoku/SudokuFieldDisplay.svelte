@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SudokuField } from "./field"
+  import type { SudokuField } from "./field"
 
   export let field: SudokuField
 

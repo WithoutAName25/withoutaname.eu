@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SudokuGrid } from "./grid"
+  import type { SudokuGrid } from "./grid"
   import SudokuFieldDisplay from "./SudokuFieldDisplay.svelte"
 
   export let grid: SudokuGrid
