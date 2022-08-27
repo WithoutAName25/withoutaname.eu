@@ -13,6 +13,7 @@ jobs:
       push: false
       target: base
       tags: withoutaname/withoutaname.eu:base
+    secrets: inherit
 
   checks:
     strategy:
@@ -25,6 +26,7 @@ jobs:
       push: false
       target: ${{ matrix.target }}
       tags: withoutaname/withoutaname.eu:${{ matrix.target }}
+    secrets: inherit
 
   version:
     name: Get current version
@@ -51,6 +53,7 @@ jobs:
       push: true
       target: final
       tags: ${{ needs.version.outputs.value }}
+    secrets: inherit
 
   unit:
     name: Test and upload coverage
