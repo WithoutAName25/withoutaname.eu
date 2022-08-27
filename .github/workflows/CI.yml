@@ -28,35 +28,6 @@ jobs:
       tags: withoutaname/withoutaname.eu:${{ matrix.target }}
     secrets: inherit
 
-  version:
-    name: Get current version
-    runs-on: ubuntu-latest
-    outputs:
-      value: ${{ steps.version.outputs.value }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Get current version
-        id: version
-        run: |
-          echo "Getting version..."
-          VERSION=$(expr match "$(git tag --points-at HEAD)" '.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*')
-          [ -z ] && echo "No version found" || echo "Current version is $VERSION"
-          TAGS=withoutaname/withoutaname.eu:latest
-          [ ! -z $VERSION ] && TAGS="$TAGS,withoutaname/withoutaname.eu:$VERSION"
-          echo "::set-output name=value::$TAGS"
-
-  publish:
-    name: Build and push final image
-    needs: [ base, checks, version]
-    uses: ./.github/workflows/docker.yml
-    with:
-      push: true
-      target: final
-      tags: ${{ needs.version.outputs.value }}
-    secrets: inherit
-
   unit:
     name: Test and upload coverage
     runs-on: ubuntu-latest
@@ -78,3 +49,34 @@ jobs:
         with:
           flags: unit
           files: ./coverage/coverage-final.json
+
+  version:
+    name: Get current version
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ steps.version.outputs.value }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get current version
+        id: version
+        run: |
+          echo "Getting version..."
+          git tag --points-at HEAD
+          expr match "Test" '.*'
+          VERSION=$(expr match "$(git tag --points-at HEAD)" '.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*')
+          [ -z ] && echo "No version found" || echo "Current version is $VERSION"
+          TAGS=withoutaname/withoutaname.eu:latest
+          [ ! -z $VERSION ] && TAGS="$TAGS,withoutaname/withoutaname.eu:$VERSION"
+          echo "::set-output name=value::$TAGS"
+
+  publish:
+    name: Build and push final image
+    needs: [ base, checks, unit, version]
+    uses: ./.github/workflows/docker.yml
+    with:
+      push: true
+      target: final
+      tags: ${{ needs.version.outputs.value }}
+    secrets: inherit
