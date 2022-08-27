@@ -3,5 +3,6 @@
     "silent": true
   },
   "public": true,
-  "buildCommand": "VERCEL=true vite build"
+  "installCommand": "yarn install",
+  "buildCommand": "VERCEL=true yarn run build"
 }
