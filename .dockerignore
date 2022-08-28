@@ -1,11 +1,12 @@
-.idea
+.git
 .github
+.idea
 .svelte-kit/*
 !.svelte-kit/tsconfig.json
 .vercel
-node_modules
-coverage
 build
+coverage
+node_modules
 .dockerignore
 Dockerfile
 LICENSE
