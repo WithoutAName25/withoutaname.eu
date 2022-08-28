@@ -17,6 +17,7 @@ jobs:
 
   checks:
     strategy:
+      fail-fast: false
       matrix:
         target: [lint, check, e2etest, build]
     name: Build ${{ matrix.target }} image
