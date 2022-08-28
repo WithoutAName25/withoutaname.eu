@@ -79,3 +79,11 @@ jobs:
       target: final
       tags: ${{ needs.version.outputs.value }}
     secrets: inherit
+
+  deploy:
+    name: Deploy latest image
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: ${{ secrets.DEPLOY_COMMAND }}
