@@ -22,8 +22,9 @@ RUN bun run test:e2e
 FROM base AS build
 RUN bun run build
 
-FROM node:18 AS final
+FROM node:18-alpine AS final
 WORKDIR /app
-COPY docker/package.json .
 COPY --from=build /app/build build
+COPY --from=build /app/node_modules node_modules
+COPY --from=build /app/package.json .
 CMD node build

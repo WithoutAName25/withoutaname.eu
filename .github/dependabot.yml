@@ -7,3 +7,10 @@ updates:
       time: "18:00"
     labels:
       - "dependencies"
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "18:00"
+    labels:
+      - "dependencies"
