@@ -28,3 +28,23 @@
     on:input={onInput}
   />
 </div>
+
+<style>
+  div {
+    border: solid 1px #ddd;
+    display: grid;
+  }
+
+  input {
+    border: none;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    display: inline-grid;
+    background-color: transparent;
+  }
+
+  input:focus {
+    outline: none;
+  }
+</style>
