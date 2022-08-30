@@ -11,8 +11,8 @@ describe("Dynamic derived store", () => {
   function getSumStore(testArray: Writable<TestClass[]>) {
     return new DynamicDerived(
       testArray,
-      (values) => values.map((value) => value.test),
-      (values) => values.reduce((acc, value) => acc + value, 0)
+      (values: TestClass[]) => values.map((value) => value.test),
+      (values: number[]) => values.reduce((acc, value) => acc + value, 0)
     )
   }
   test("should update when value is changed", () => {

@@ -1,21 +1,26 @@
+import type { Readable } from "svelte/store"
 import { derived, get, writable } from "svelte/store"
-import { DynamicDerived } from "../../../scripts/store"
-import { applyToAllCombinations, isSetEqual } from "../../../scripts/utils"
+import { DerivedSetStore, DynamicDerivedSetStore } from "../../../scripts/store"
+import { applyToAllCombinations } from "../../../scripts/utils"
 import type { SudokuField } from "./field"
 import { ForcedValue } from "./field"
+import type { SudokuGrid } from "./grid"
 import { DEFAULT_ALLOWED_VALUES } from "./grid"
 
 export class NoDuplicatesConstraint {
   private readonly fields = writable<SudokuField[]>([])
 
-  constructor(readonly allowedValues = DEFAULT_ALLOWED_VALUES) {
+  constructor(
+    readonly grid: SudokuGrid,
+    readonly allowedValues = DEFAULT_ALLOWED_VALUES
+  ) {
     let registeredForcedValues = false
     this.fields.subscribe(($fields) => {
       if (registeredForcedValues) throw new Error("Should not change anymore")
 
       if ($fields.length === this.allowedValues.size) {
         for (const allowedValue of allowedValues) {
-          const store = derived(
+          const forcedValue = derived(
             $fields.map((value) => value.possibleValues),
             ($possibleValuesPerField) =>
               new ForcedValue(
@@ -27,40 +32,33 @@ export class NoDuplicatesConstraint {
                   .filter((value) => value !== undefined) as SudokuField[]
               )
           )
+          grid.forcedValues.add(forcedValue)
           for (const field of $fields) {
-            field.forcedValues.update(($forcedValues) => {
-              $forcedValues.push(store)
-              return $forcedValues
-            })
-            for (const otherField of $fields) {
-              if (otherField === field) continue
-
-              const excludedValues = new DynamicDerived(
-                otherField.forcedValues,
-                ($forcedValues) => $forcedValues,
-                ($forcedValues) => {
+            const unsubscribers = new Map<Readable<ForcedValue>, () => void>()
+            grid.forcedValues.onAdd((forcedValue: Readable<ForcedValue>) => {
+              const store = new DerivedSetStore(
+                forcedValue,
+                ($forcedValue: ForcedValue) => {
                   const excludedValues = new Set<string>()
-                  for (const forcedValue of $forcedValues) {
-                    if (
-                      forcedValue.possibleFields.every(
-                        (value) =>
-                          value !== field && $fields.indexOf(value) !== -1
-                      )
-                    ) {
-                      excludedValues.add(forcedValue.value)
-                    }
+                  if (
+                    $forcedValue.possibleFields.every(
+                      (value: SudokuField) =>
+                        value !== field && $fields.indexOf(value) !== -1
+                    )
+                  ) {
+                    excludedValues.add($forcedValue.value)
                   }
                   return excludedValues
                 }
               )
-
-              field.excludedValuesPerConstraint.update(
-                ($excludedValuesPerConstraint) => {
-                  $excludedValuesPerConstraint.push(excludedValues)
-                  return $excludedValuesPerConstraint
-                }
-              )
-            }
+              field.excludedValues.add(store)
+              unsubscribers.set(forcedValue, () => {
+                field.excludedValues.delete(store)
+              })
+            })
+            grid.forcedValues.onDelete((value: Readable<ForcedValue>) => {
+              unsubscribers.get(value)?.()
+            })
           }
         }
 
@@ -84,44 +82,46 @@ export class NoDuplicatesConstraint {
       return $fields
     })
 
-    const excludedValues = new DynamicDerived(
+    // TODO optimize
+    const excludedValues = new DynamicDerivedSetStore(
       this.fields,
-      ($fields) =>
+      ($fields: SudokuField[]) =>
         $fields
           .filter((value) => value !== field)
           .map((value) => value.possibleValues),
-      ($possibleValuesPerField) => {
+      ($possibleValuesPerField: ReadonlySet<string>[]) => {
         const excludedValues = new Set<string>()
+        if (get(field.value) !== undefined) return excludedValues
 
         for (let k = 1; k <= $possibleValuesPerField.length; k++) {
           const array = $possibleValuesPerField.filter(
-            (value) => value.size <= k
+            (value: ReadonlySet<string>) => value.size <= k
           )
 
           if (array.length < k) continue
 
-          applyToAllCombinations(array, k, (selected) => {
-            const values = new Set<string>()
-            for (const set of selected) {
-              for (const value of set) {
-                values.add(value)
+          applyToAllCombinations(
+            array,
+            k,
+            (selected: ReadonlySet<string>[]) => {
+              const values = new Set<string>()
+              for (const set of selected) {
+                for (const value of set) {
+                  values.add(value)
+                }
+              }
+              if (values.size === k) {
+                for (const value of values) {
+                  excludedValues.add(value)
+                }
               }
             }
-            if (values.size === k) {
-              for (const value of values) {
-                excludedValues.add(value)
-              }
-            }
-          })
+          )
         }
 
         return excludedValues
-      },
-      isSetEqual
+      }
     )
-    field.excludedValuesPerConstraint.update(($excludedValuesPerConstraint) => {
-      $excludedValuesPerConstraint.push(excludedValues)
-      return $excludedValuesPerConstraint
-    })
+    field.excludedValues.add(excludedValues)
   }
 }

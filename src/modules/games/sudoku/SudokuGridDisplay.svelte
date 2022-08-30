@@ -22,7 +22,7 @@
     display: grid;
     grid-template-columns: repeat(var(--width), 1fr);
     grid-template-rows: repeat(var(--height), 1fr);
-    border: 3px solid #ddd;
+    border: 3px solid var(--text-2);
     width: 45rem;
     height: 45rem;
     transform: translateX(-50%);

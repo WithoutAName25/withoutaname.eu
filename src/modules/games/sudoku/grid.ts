@@ -1,4 +1,6 @@
-import { SudokuField } from "./field"
+import type { Readable } from "svelte/store"
+import { WritableSetStore } from "../../../scripts/store"
+import { ForcedValue, SudokuField } from "./field"
 
 export const DEFAULT_ALLOWED_VALUES: ReadonlySet<string> = new Set([
   "1",
@@ -19,6 +21,9 @@ export class SudokuGrid {
   positiveDiagonals: readonly (readonly SudokuField[])[]
   negativeDiagonal: readonly SudokuField[] | undefined
   negativeDiagonals: readonly (readonly SudokuField[])[]
+
+  readonly forcedValues: WritableSetStore<Readable<ForcedValue>> =
+    new WritableSetStore<Readable<ForcedValue>>()
 
   constructor(
     readonly width = 9,
