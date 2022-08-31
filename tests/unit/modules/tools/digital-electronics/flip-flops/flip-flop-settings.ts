@@ -4,7 +4,7 @@ import {
   ClockControl,
   FlipFlopSettings,
   FlipFlopType,
-} from "../../../../../../src/modules/tools/digital-electronics/flip-flops/flip-flop-settings"
+} from "../../../../../../src/routes/tools/digital-electronics/flip-flops/flip-flop-settings"
 
 describe("Test flip-flop settings", () => {
   it("should switch to edge control", () => {

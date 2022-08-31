@@ -1,10 +1,10 @@
 <script lang="ts">
   import DownloadableContent from "../../../../components/DownloadableContent.svelte"
-  import FlipFlopDisplay from "../../../../modules/tools/digital-electronics/flip-flops/display/FlipFlopDisplay.svelte"
-  import { FlipFlop } from "../../../../modules/tools/digital-electronics/flip-flops/flip-flop"
-  import { FlipFlopSettings } from "../../../../modules/tools/digital-electronics/flip-flops/flip-flop-settings"
-  import FlipFlopSettingsMenu from "../../../../modules/tools/digital-electronics/flip-flops/FlipFlopSettingsMenu.svelte"
-  import FlipFlopHistory from "../../../../modules/tools/digital-electronics/flip-flops/history/FlipFlopHistory.svelte"
+  import FlipFlopDisplay from "./display/FlipFlopDisplay.svelte"
+  import { FlipFlop } from "./flip-flop"
+  import { FlipFlopSettings } from "./flip-flop-settings"
+  import FlipFlopSettingsMenu from "./FlipFlopSettingsMenu.svelte"
+  import FlipFlopHistory from "./history/FlipFlopHistory.svelte"
 
   const settings = new FlipFlopSettings()
   const flipFlop = new FlipFlop(settings)

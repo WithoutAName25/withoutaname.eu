@@ -10,9 +10,6 @@ const config = {
 
   kit: {
     adapter: process.env.VERCEL === "true" ? vercel() : adapterNode(),
-    prerender: {
-      default: true,
-    },
   },
 }
 
