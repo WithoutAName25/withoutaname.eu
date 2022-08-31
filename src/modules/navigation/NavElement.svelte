@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { page } from "$app/stores"
-  import type { NavElementData } from "./navigation"
-  import { NavGroupData } from "./navigation"
-  import NavDropdown from "./NavDropdown.svelte"
-  import { onClickOrEnterOutside } from "../../scripts/onClickOutside"
+  import { navigating, page } from "$app/stores"
   import ExternalIcon from "~icons/lucide/external-link"
   import DropdownIcon from "~icons/mdi/menu-down"
+  import { onClickOrEnterOutside } from "../../scripts/onClickOutside"
+  import NavDropdown from "./NavDropdown.svelte"
+  import type { NavElementData } from "./navigation"
+  import { NavGroupData } from "./navigation"
 
   export let data: NavElementData
   export let depth: number
@@ -20,6 +20,7 @@
 
   let hover = false
   let clicked = false
+  $: if ($navigating === null) clicked = false
 
   $: inline = mobile || depth > 0
   $: showDropdown = clicked || (hover && !inline)

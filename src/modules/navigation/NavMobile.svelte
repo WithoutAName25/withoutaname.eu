@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { navigationData } from "./navigation"
-  import type { NavigationData } from "./navigation"
+  import { navigating } from "$app/stores"
   import NavElement from "./NavElement.svelte"
+  import type { NavigationData } from "./navigation"
+  import { navigationData } from "./navigation"
 
   export let data: NavigationData = navigationData
 
   let expanded = false
+  $: if ($navigating === null) expanded = false
 </script>
 
 <nav>
