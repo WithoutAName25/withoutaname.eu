@@ -47,50 +47,49 @@ export class BasicWritable<T> extends BasicReadable<T> implements Writable<T> {
   }
 }
 
-export class ReadableSetStore<T> extends BasicReadable<Set<T>> {
-  private onAddSubscribers: Set<Subscriber<T>> = new Set()
-  private onDeleteSubscribers: Set<Subscriber<T>> = new Set()
+export class ReadableSetStore<T> extends BasicReadable<ReadonlySet<T>> {
+  private onAddSubscribers: Set<Subscriber<ReadonlySet<T>>> = new Set()
+  private onDeleteSubscribers: Set<Subscriber<ReadonlySet<T>>> = new Set()
+
+  protected declare value: Set<T>
 
   constructor(value?: Set<T>) {
     super(value ?? new Set())
   }
 
-  protected add(item: T): void {
-    this.value.add(item)
+  protected add(...items: T[]): void {
+    if (items.length === 0) return
+    const itemSet = new Set(items)
+    for (const item of itemSet) this.value.add(item)
     this.notifySubscribers()
-    this.notify(item, this.onAddSubscribers)
+    this.notify(itemSet, this.onAddSubscribers)
   }
 
-  protected delete(item: T): void {
-    this.value.delete(item)
+  protected delete(...items: T[]): void {
+    if (items.length === 0) return
+    const itemSet = new Set(items)
+    for (const item of itemSet) this.value.delete(item)
     this.notifySubscribers()
-    this.notify(item, this.onDeleteSubscribers)
+    this.notify(itemSet, this.onDeleteSubscribers)
   }
 
-  protected set(newValue: Set<T>) {
-    let hasChanged = false
-    for (const value of this.value)
-      if (!newValue.has(value)) {
-        this.notify(value, this.onDeleteSubscribers)
-        hasChanged = true
-      }
-    for (const value of newValue)
-      if (!this.value.has(value)) {
-        this.notify(value, this.onAddSubscribers)
-        hasChanged = true
-      }
-    if (hasChanged) super.set(newValue)
+  protected set(newValue: ReadonlySet<T>) {
+    const added = new Set<T>()
+    const deleted = new Set<T>()
+    for (const value of this.value) if (!newValue.has(value)) deleted.add(value)
+    for (const value of newValue) if (!this.value.has(value)) added.add(value)
+    if (deleted.size > 0) this.notify(deleted, this.onDeleteSubscribers)
+    if (added.size > 0) this.notify(added, this.onAddSubscribers)
+    if (deleted.size > 0 || added.size > 0) super.set(newValue)
   }
 
-  onAdd(run: Subscriber<T>): Unsubscriber {
+  onAdd(run: Subscriber<ReadonlySet<T>>): Unsubscriber {
     this.onAddSubscribers.add(run)
-    for (const value of this.value) {
-      run(value)
-    }
+    run(this.value)
     return () => this.onAddSubscribers.delete(run)
   }
 
-  onDelete(run: Subscriber<T>): Unsubscriber {
+  onDelete(run: Subscriber<ReadonlySet<T>>): Unsubscriber {
     this.onDeleteSubscribers.add(run)
     return () => this.onDeleteSubscribers.delete(run)
   }
@@ -98,31 +97,31 @@ export class ReadableSetStore<T> extends BasicReadable<Set<T>> {
 
 export class WritableSetStore<T>
   extends ReadableSetStore<T>
-  implements Writable<Set<T>>
+  implements Writable<ReadonlySet<T>>
 {
   constructor(value?: Set<T>) {
     super(value)
   }
 
-  public add(item: T) {
-    super.add(item)
+  public add(...items: T[]) {
+    super.add(...items)
   }
 
-  public delete(item: T) {
-    super.delete(item)
+  public delete(...items: T[]) {
+    super.delete(...items)
   }
 
-  public set(value: Set<T>) {
+  public set(value: ReadonlySet<T>) {
     super.set(value)
   }
 
-  public update(updater: Updater<Set<T>>) {
+  public update(updater: Updater<ReadonlySet<T>>) {
     super.update(updater)
   }
 }
 
 export class DerivedSetStore<V, T> extends ReadableSetStore<T> {
-  constructor(store: Readable<V>, callback: (value: V) => Set<T>) {
+  constructor(store: Readable<V>, callback: (value: V) => ReadonlySet<T>) {
     super()
     store.subscribe((value) => {
       this.set(callback(value))
@@ -136,39 +135,51 @@ export class DerivedSetCombination<T> extends ReadableSetStore<T> {
 
   constructor(store: ReadableSetStore<ReadableSetStore<T>>) {
     super()
-    store.onAdd((innerStore) => {
-      this.unsubscribers.set(innerStore, [
-        innerStore.onAdd((value) => this.addToCount(value)),
-        innerStore.onDelete((value) => this.removeFromCount(value)),
-      ])
-    })
-    store.onDelete((innerStore) => {
-      this.unsubscribers
-        .get(innerStore)
-        ?.forEach((unsubscriber) => unsubscriber())
-      get(innerStore).forEach((value) => this.removeFromCount(value))
-    })
-  }
-
-  private addToCount(value: T) {
-    if (this.valueCount.has(value)) {
-      this.valueCount.set(value, (this.valueCount.get(value) ?? 0) + 1)
-    } else {
-      this.valueCount.set(value, 1)
-      this.add(value)
-    }
-  }
-
-  private removeFromCount(value: T) {
-    if (this.valueCount.has(value)) {
-      const count = this.valueCount.get(value) ?? 0
-      if (count <= 1) {
-        this.valueCount.delete(value)
-        this.delete(value)
-      } else {
-        this.valueCount.set(value, count - 1)
+    store.onAdd((innerStores) => {
+      for (const innerStore of innerStores) {
+        this.unsubscribers.set(innerStore, [
+          innerStore.onAdd((values) => this.addToCount(values)),
+          innerStore.onDelete((values) => this.removeFromCount(values)),
+        ])
       }
-    } else console.error("Negative count in DerivedSetCombination!")
+    })
+    store.onDelete((innerStores) => {
+      for (const innerStore of innerStores) {
+        this.unsubscribers
+          .get(innerStore)
+          ?.forEach((unsubscriber) => unsubscriber())
+        this.removeFromCount(get(innerStore))
+      }
+    })
+  }
+
+  private addToCount(values: ReadonlySet<T>) {
+    const added = new Set<T>()
+    for (const value of values) {
+      if (this.valueCount.has(value)) {
+        this.valueCount.set(value, (this.valueCount.get(value) ?? 0) + 1)
+      } else {
+        this.valueCount.set(value, 1)
+        added.add(value)
+      }
+    }
+    this.add(...added)
+  }
+
+  private removeFromCount(values: ReadonlySet<T>) {
+    const deleted = new Set<T>()
+    for (const value of values) {
+      if (this.valueCount.has(value)) {
+        const count = this.valueCount.get(value) ?? 0
+        if (count <= 1) {
+          this.valueCount.delete(value)
+          deleted.add(value)
+        } else {
+          this.valueCount.set(value, count - 1)
+        }
+      } else console.error("Negative count in DerivedSetCombination!")
+    }
+    this.delete(...deleted)
   }
 }
 

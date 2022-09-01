@@ -33,33 +33,32 @@ export class NoDuplicatesConstraint {
               )
           )
           grid.forcedValues.add(forcedValue)
-          for (const field of $fields) {
-            const unsubscribers = new Map<Readable<ForcedValue>, () => void>()
-            grid.forcedValues.onAdd((forcedValue: Readable<ForcedValue>) => {
-              const store = new DerivedSetStore(
-                forcedValue,
-                ($forcedValue: ForcedValue) => {
-                  const excludedValues = new Set<string>()
-                  if (
-                    $forcedValue.possibleFields.every(
-                      (value: SudokuField) =>
-                        value !== field && $fields.indexOf(value) !== -1
-                    )
-                  ) {
-                    excludedValues.add($forcedValue.value)
-                  }
-                  return excludedValues
+        }
+        for (const field of $fields) {
+          const unsubscribers = new Map<Readable<ForcedValue>, () => void>()
+          grid.forcedValues.onAdd((values) => {
+            for (const value of values) {
+              const store = new DerivedSetStore(value, ($forcedValue) => {
+                const excludedValues = new Set<string>()
+                if (
+                  $forcedValue.possibleFields.every(
+                    (value: SudokuField) =>
+                      value !== field && $fields.indexOf(value) !== -1
+                  )
+                ) {
+                  excludedValues.add($forcedValue.value)
                 }
-              )
+                return excludedValues
+              })
               field.excludedValues.add(store)
-              unsubscribers.set(forcedValue, () => {
+              unsubscribers.set(value, () => {
                 field.excludedValues.delete(store)
               })
-            })
-            grid.forcedValues.onDelete((value: Readable<ForcedValue>) => {
-              unsubscribers.get(value)?.()
-            })
-          }
+            }
+          })
+          grid.forcedValues.onDelete((values) => {
+            for (const value of values) unsubscribers.get(value)?.()
+          })
         }
 
         registeredForcedValues = true
@@ -89,7 +88,7 @@ export class NoDuplicatesConstraint {
         $fields
           .filter((value) => value !== field)
           .map((value) => value.possibleValues),
-      ($possibleValuesPerField: ReadonlySet<string>[]) => {
+      ($possibleValuesPerField) => {
         const excludedValues = new Set<string>()
         if (get(field.value) !== undefined) return excludedValues
 
@@ -100,23 +99,19 @@ export class NoDuplicatesConstraint {
 
           if (array.length < k) continue
 
-          applyToAllCombinations(
-            array,
-            k,
-            (selected: ReadonlySet<string>[]) => {
-              const values = new Set<string>()
-              for (const set of selected) {
-                for (const value of set) {
-                  values.add(value)
-                }
-              }
-              if (values.size === k) {
-                for (const value of values) {
-                  excludedValues.add(value)
-                }
+          applyToAllCombinations(array, k, (selected) => {
+            const values = new Set<string>()
+            for (const set of selected) {
+              for (const value of set) {
+                values.add(value)
               }
             }
-          )
+            if (values.size === k) {
+              for (const value of values) {
+                excludedValues.add(value)
+              }
+            }
+          })
         }
 
         return excludedValues
