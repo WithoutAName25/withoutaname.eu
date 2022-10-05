@@ -7,7 +7,7 @@
   export let data: NavigationData = navigationData
 
   let expanded = false
-  $: if ($navigating === null) expanded = false
+  $: if ($navigating?.from?.href !== $navigating?.to?.href) expanded = false
 </script>
 
 <nav>

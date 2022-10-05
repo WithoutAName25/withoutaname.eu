@@ -20,7 +20,7 @@
 
   let hover = false
   let clicked = false
-  $: if ($navigating === null) clicked = false
+  $: if ($navigating?.from?.href !== $navigating?.to?.href) clicked = false
 
   $: inline = mobile || depth > 0
   $: showDropdown = clicked || (hover && !inline)
