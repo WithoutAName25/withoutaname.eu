@@ -1,4 +1,4 @@
-FROM node:18 AS base
+FROM node:19 AS base
 WORKDIR /app
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH "$PATH:/root/.bun/bin"
@@ -22,7 +22,7 @@ RUN bun run test:e2e
 FROM base AS build
 RUN bun run build
 
-FROM node:18-alpine AS final
+FROM node:19-alpine AS final
 WORKDIR /app
 COPY --from=build /app/build build
 COPY --from=build /app/node_modules node_modules
