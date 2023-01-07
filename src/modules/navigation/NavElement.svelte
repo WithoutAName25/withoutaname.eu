@@ -20,7 +20,7 @@
 
   let hover = false
   let clicked = false
-  $: if ($navigating?.from?.href !== $navigating?.to?.href) clicked = false
+  $: if ($navigating?.from?.url !== $navigating?.to?.url) clicked = false
 
   $: inline = mobile || depth > 0
   $: showDropdown = clicked || (hover && !inline)
@@ -29,7 +29,8 @@
 <svelte:body
   on:keydown={(event) => {
     if (event.key === "Escape") clicked = false
-  }} />
+  }}
+/>
 <li
   on:mouseenter={() => (hover = true)}
   on:mouseleave={() => (hover = false)}

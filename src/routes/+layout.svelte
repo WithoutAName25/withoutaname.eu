@@ -21,7 +21,7 @@
   }
 </script>
 
-<div class="wrapper" color-scheme={preferredColorScheme}>
+<div class="wrapper" data-color-scheme={preferredColorScheme}>
   <Header />
   <main>
     <slot />
