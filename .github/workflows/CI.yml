@@ -67,7 +67,7 @@ jobs:
           VERSION=$(expr match "$(git tag --points-at HEAD)" '.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*') \
           && TAGS="$TAGS,withoutaname/withoutaname.eu:$VERSION" \
           || echo "No version found"
-          echo "::set-output name=value::$TAGS"
+          echo "value=$TAGS" >> $GITHUB_OUTPUT
 
   publish:
     name: Build and push final image
