@@ -36,5 +36,5 @@ jobs:
           target: ${{ inputs.target }}
           push: ${{ inputs.push }}
           tags: ${{ inputs.tags }}
-          cache-from: type=registry,ref=withoutaname/withoutaname.eu:buildcache
-          cache-to: type=registry,ref=withoutaname/withoutaname.eu:buildcache,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
