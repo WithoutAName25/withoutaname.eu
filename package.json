@@ -28,7 +28,7 @@
     "@iconify-json/lucide": "^1.1.55",
     "@iconify-json/mdi": "^1.1.41",
     "@playwright/test": "^1.29.2",
-    "@sveltejs/adapter-node": "1.1.0",
+    "@sveltejs/adapter-node": "1.2.0",
     "@sveltejs/adapter-vercel": "1.0.1",
     "@sveltejs/kit": "1.0.7",
     "@types/file-saver": "^2.0.5",
