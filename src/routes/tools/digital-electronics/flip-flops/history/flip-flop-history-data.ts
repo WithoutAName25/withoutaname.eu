@@ -110,11 +110,11 @@ export class PinHistoryData {
     width: number,
     height: number
   ): Readable<string> {
-    return derived(this.data, ($data) => {
+    return derived([this.data, this.settings.length], ([$data, $length]) => {
       let s = ""
-      const intervalWidth = width / get(this.settings.length)
-      const startI = get(this.settings.length) - $data.length
-      for (let i = Math.max(startI, 0); i < get(this.settings.length); i++) {
+      const intervalWidth = width / $length
+      const startI = $length - $data.length
+      for (let i = Math.max(startI, 0); i < $length; i++) {
         const intervalData = $data[i - startI]
         for (let j = 0; j < intervalData.length; j++) {
           const sectionWidth = intervalWidth / intervalData.length
