@@ -1,5 +1,6 @@
 {
   "private": true,
+  "packageManager": "pnpm@7.27.1",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
