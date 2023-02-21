@@ -1,13 +1,5 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "18:00"
-    labels:
-      - "dependencies"
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
