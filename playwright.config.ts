@@ -4,7 +4,7 @@ import { devices } from "@playwright/test"
 const config: PlaywrightTestConfig = {
   testDir: "tests/e2e",
   webServer: {
-    command: "bun run build && bun run preview",
+    command: "pnpm run build && pnpm run preview",
     reuseExistingServer: true,
     port: 4173,
   },

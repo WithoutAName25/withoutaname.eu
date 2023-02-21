@@ -9,9 +9,9 @@
 !.npmrc
 !.prettierignore
 !.prettierrc
-!bun.lockb
 !package.json
 !playwright.config.ts
+!pnpm-lock.yaml
 !svelte.config.js
 !tsconfig.json
 !vite.config.js
