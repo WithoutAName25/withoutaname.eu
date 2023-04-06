@@ -1,7 +1,7 @@
 import type { Readable } from "svelte/store"
 import { derived } from "svelte/store"
 import { shuffle } from "../../../scripts/util"
-import type Cell from "./cell"
+import Cell from "./cell"
 
 function generateMines(
   width: number,
@@ -25,7 +25,7 @@ function calculateAdjacentMines(
   )
 
   // Loop through all mine locations and increment adjacent cells
-  for (let [mineX, mineY] of mineLocations) {
+  for (const [mineX, mineY] of mineLocations) {
     board[mineX][mineY] = [true, 0]
     for (let dx = -1; dx <= 1; dx++) {
       for (let dy = -1; dy <= 1; dy++) {
