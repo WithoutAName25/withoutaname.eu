@@ -8,10 +8,10 @@ function generateMines(
   height: number,
   mines: number
 ): [number, number][] {
-  const positions: [number, number][] = Array(width * height).map((_, i) => [
-    i % width,
-    Math.floor(i / width),
-  ])
+  const positions: [number, number][] = Array.from(
+    Array(width * height),
+    (_, i) => [i % width, Math.floor(i / width)]
+  )
   return shuffle(positions).slice(0, mines)
 }
 
@@ -20,8 +20,8 @@ function calculateAdjacentMines(
   height: number,
   mineLocations: [number, number][]
 ): [boolean, number][][] {
-  const board: [boolean, number][][] = Array(width).map(() =>
-    Array(height).map(() => [false, 0])
+  const board: [boolean, number][][] = Array.from(Array(width), () =>
+    Array.from(Array(height), () => [false, 0])
   )
 
   // Loop through all mine locations and increment adjacent cells
@@ -67,7 +67,7 @@ export class GameBoard {
     const flaggedCorrectlyStores: Readable<boolean>[] = []
     const revealedCorrectlyStores: Readable<boolean>[] = []
     const hasLostStores: Readable<boolean>[] = []
-    const cells: Cell[][] = Array(width).map(() => Array(height))
+    const cells: Cell[][] = Array.from(Array(width), () => Array(height))
     for (let x = 0; x < width; x++) {
       for (let y = 0; y < height; y++) {
         const [isMine, numAdjacentMines] = adjacentMines[x][y]
