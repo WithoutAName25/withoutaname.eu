@@ -56,10 +56,10 @@ export class Instruction<ArgType extends Args> {
       machine.instructionPointer++
     }),
     new Instruction(/^GOTO (\d+)$/, (match) => new NumberArg(parseInt(match[1])), (machine, args) => {
-      machine.instructionPointer = args.value
+      machine.instructionPointer = args.value - 1
     }),
     new Instruction(/^IF c\(0\) = (\d+) GOTO (\d+)$/, (match) => new NumberPairArg(parseInt(match[1]), parseInt(match[2])), (machine, args) => {
-      machine.instructionPointer = machine.accumulator === args.value1 ? args.value2 : machine.instructionPointer + 1
+      machine.instructionPointer = machine.accumulator === args.value1 ? args.value2 - 1 : machine.instructionPointer + 1
     }),
   ]
 
@@ -80,7 +80,9 @@ export class Instruction<ArgType extends Args> {
     public readonly apply: (machine: Machine, args: ArgType) => void
   ) {}
 
-  public getInstructionWithArgsIfMatches(line: string) {
+  public getInstructionWithArgsIfMatches(
+    line: string
+  ): InstructionWithArgs<ArgType> | null {
     const match = line.match(this.regex)
     if (match) {
       return new InstructionWithArgs(this, this.getArgs(match))

@@ -2,7 +2,7 @@ export class Memory {
   private memory = new Map<number, number>()
 
   constructor(initalMemory: number[]) {
-    initalMemory.forEach((value, address) => this.memory.set(address, value))
+    initalMemory.forEach((value, index) => this.memory.set(index + 1, value))
   }
 
   public get(address: number): number {

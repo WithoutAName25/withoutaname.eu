@@ -1,11 +1,17 @@
 import type { Memory } from "./memory"
+import type { Program } from "./program"
 
 export class Machine {
-  readonly memory: Memory
   accumulator = 0
   instructionPointer = 0
+  operationCounter = 0
+  constructor(readonly program: Program, readonly memory: Memory) {}
 
-  constructor(memory: Memory) {
-    this.memory = memory
+  step() {
+    if (this.instructionPointer >= this.program.instructions.length) {
+      throw new Error("Program ended")
+    }
+    this.program.instructions[this.instructionPointer].applyOn(this)
+    this.operationCounter++
   }
 }

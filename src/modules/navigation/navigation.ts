@@ -34,10 +34,12 @@ export class NavGroupData {
   }
 }
 
+// prettier-ignore
 export const navigationData = new NavigationData([
   new NavLinkData("Home", "/"),
   new NavGroupData("Tools", "/tools", [
     new NavLinkData("FlipFlops", "/tools/digital-electronics/flip-flops"),
+    new NavLinkData("RAM Simulation", "/tools/computer-sience/random-access-machine"),
   ]),
   new NavLinkData("Repo", "https://repo.withoutaname.eu"),
 ])
