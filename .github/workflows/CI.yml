@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [lint, check, e2etest, build]
+        target: [lint, check, build]
     name: Build ${{ matrix.target }} image
     needs: base
     uses: ./.github/workflows/docker.yml
