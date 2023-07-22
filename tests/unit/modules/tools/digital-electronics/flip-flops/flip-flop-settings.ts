@@ -13,7 +13,7 @@ describe("Test flip-flop settings", () => {
     const clockControl = get(flipFlopSettings.clockControl)
     expect(
       clockControl === ClockControl.EDGE ||
-        clockControl === ClockControl.DUAL_EDGE
+        clockControl === ClockControl.DUAL_EDGE,
     ).toBeTruthy()
   })
 })

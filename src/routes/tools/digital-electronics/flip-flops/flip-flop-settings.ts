@@ -34,24 +34,24 @@ export class FlipFlopSettings {
     this.clockControl,
     (clockControl) =>
       clockControl === ClockControl.DUAL_STATE ||
-      clockControl === ClockControl.DUAL_EDGE
+      clockControl === ClockControl.DUAL_EDGE,
   )
 
   readonly edgeControlled = derived(
     this.clockControl,
     ($clockControl) =>
       $clockControl === ClockControl.EDGE ||
-      $clockControl === ClockControl.DUAL_EDGE
+      $clockControl === ClockControl.DUAL_EDGE,
   )
 
   readonly nonEdgeClockControlAllowed = derived(
     this.flipFlopType,
     ($flipFlopType) =>
-      $flipFlopType === FlipFlopType.RS || $flipFlopType === FlipFlopType.D
+      $flipFlopType === FlipFlopType.RS || $flipFlopType === FlipFlopType.D,
   )
   readonly preClearAllowed = derived(
     this.clockControl,
-    ($clockControl) => $clockControl !== ClockControl.NONE
+    ($clockControl) => $clockControl !== ClockControl.NONE,
   )
 
   constructor() {

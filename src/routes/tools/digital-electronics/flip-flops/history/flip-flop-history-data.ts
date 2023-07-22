@@ -45,7 +45,7 @@ export class FlipFlopHistoryData {
       let lastClockValue = true
       const inputPinValuesStore = derived(
         inputPinValues,
-        ($pinValues) => $pinValues
+        ($pinValues) => $pinValues,
       )
       this.unsubscribeInput()
       this.unsubscribeInput = inputPinValuesStore.subscribe((values) => {
@@ -62,7 +62,7 @@ export class FlipFlopHistoryData {
       })
       const outputPinValuesStore = derived(
         outputPinValues,
-        ($pinValues) => $pinValues
+        ($pinValues) => $pinValues,
       )
       this.unsubscribeOutput()
       this.unsubscribeOutput = outputPinValuesStore.subscribe((values) => {
@@ -108,7 +108,7 @@ export class PinHistoryData {
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
   ): Readable<string> {
     return derived([this.data, this.settings.length], ([$data, $length]) => {
       let s = ""

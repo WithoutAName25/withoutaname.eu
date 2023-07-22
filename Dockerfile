@@ -10,22 +10,22 @@ FROM base AS dev
 COPY . .
 
 FROM dev as lint
-RUN pnpm run lint
+CMD pnpm run lint
 
 FROM dev as check
-RUN pnpm run check
+CMD pnpm run check
 
 FROM dev AS unittest
-RUN pnpm run test:unit:ci
+CMD pnpm run test:unit:ci
 
 FROM base AS e2etest
 COPY playwright.config.ts ./
 RUN pnpm run playwright:install:withDebs
 COPY . .
-RUN pnpm run test:e2e
+CMD pnpm run test:e2e
 
 FROM dev AS build
-RUN pnpm run build
+CMD pnpm run build
 
 FROM node:20-alpine AS final
 WORKDIR /app

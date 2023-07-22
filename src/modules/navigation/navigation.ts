@@ -25,7 +25,7 @@ export class NavGroupData {
     name: string,
     baseUrl: string,
     elements: NavElementData[],
-    url?: string
+    url?: string,
   ) {
     this.name = name
     this.url = url

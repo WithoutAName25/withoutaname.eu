@@ -34,7 +34,7 @@ export class FlipFlop {
   private setupDefaults() {
     derived(
       [this.settings.flipFlopType, this.settings.clockControl],
-      ($value) => $value
+      ($value) => $value,
     ).subscribe(() => {
       this.i0.set(false)
       this.iC.set(false)
@@ -52,7 +52,7 @@ export class FlipFlop {
   private watchInputs() {
     derived(
       [this.i0, this.i1, this.iPre, this.iClr],
-      ($value) => $value
+      ($value) => $value,
     ).subscribe(([, , iPre, iClr]) => {
       if (iPre || iClr) {
         this.qMaster.set(iPre)
@@ -135,8 +135,8 @@ export class FlipFlop {
             $flipFlopType === FlipFlopType.RS
               ? "S"
               : $flipFlopType.toString().charAt(0).toUpperCase(),
-            this.i0
-          )
+            this.i0,
+          ),
         )
         if ($clockControl !== ClockControl.NONE) {
           pins.push(new FlipFlopPin(true, "C", this.iC))
@@ -149,12 +149,12 @@ export class FlipFlop {
             new FlipFlopPin(
               true,
               $flipFlopType === FlipFlopType.RS ? "R" : "K",
-              this.i1
-            )
+              this.i1,
+            ),
           )
         }
         return pins
-      }
+      },
     )
     const top = derived(this.settings.withPre, ($withPre) => {
       const pins = new Array<FlipFlopPin>()
@@ -174,7 +174,7 @@ export class FlipFlop {
       const pins = new Array<FlipFlopPin>()
       pins.push(
         new FlipFlopPin(false, "Q", this.oQ),
-        new FlipFlopPin(false, "Q'", this.oQNot)
+        new FlipFlopPin(false, "Q'", this.oQNot),
       )
       return pins
     })
@@ -190,7 +190,7 @@ export class FlipFlop {
       [left, top, bottom, right],
       ([left, top, bottom, right]) => {
         return left.concat(top, bottom, [pinQMaster], right)
-      }
+      },
     )
     this.history.setPins(allPins)
   }

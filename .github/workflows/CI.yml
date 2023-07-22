@@ -36,9 +36,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Bun
-        uses: antongolub/action-setup-bun@v1
-
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
