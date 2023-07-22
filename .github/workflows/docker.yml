@@ -38,6 +38,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           target: ${{ inputs.target }}
+          load: ${{ inputs.run }}
           push: ${{ inputs.push }}
           tags: ${{ inputs.tags }}
           cache-from: type=gha
