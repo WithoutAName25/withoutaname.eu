@@ -11,6 +11,7 @@ jobs:
     uses: ./.github/workflows/docker.yml
     with:
       push: false
+      run: false
       target: base
       tags: withoutaname/withoutaname.eu:base
     secrets: inherit
@@ -19,12 +20,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [lint, check, build]
+        target: [lint, check]
     name: Build ${{ matrix.target }} image
     needs: base
     uses: ./.github/workflows/docker.yml
     with:
       push: false
+      run: true
       target: ${{ matrix.target }}
       tags: withoutaname/withoutaname.eu:${{ matrix.target }}
     secrets: inherit
@@ -89,6 +91,7 @@ jobs:
     uses: ./.github/workflows/docker.yml
     with:
       push: true
+      run: false
       target: final
       tags: ${{ needs.version.outputs.value }}
     secrets: inherit

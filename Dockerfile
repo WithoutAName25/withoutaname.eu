@@ -25,7 +25,7 @@ COPY . .
 CMD pnpm run test:e2e
 
 FROM dev AS build
-CMD pnpm run build
+RUN pnpm run build
 
 FROM node:20-alpine AS final
 WORKDIR /app

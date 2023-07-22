@@ -6,6 +6,9 @@ on:
       push:
         required: true
         type: boolean
+      run:
+        required: true
+        type: boolean
       target:
         required: true
         type: string
@@ -39,3 +42,7 @@ jobs:
           tags: ${{ inputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Run
+        if: ${{ inputs.run }}
+        run: docker run --rm ${{ inputs.tags }}
