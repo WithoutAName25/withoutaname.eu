@@ -1,4 +1,4 @@
-FROM node:20 AS base
+FROM node:21 AS base
 WORKDIR /app
 RUN npm install -g pnpm
 COPY pnpm-lock.yaml ./
@@ -27,7 +27,7 @@ CMD pnpm run test:e2e
 FROM dev AS build
 RUN pnpm run build
 
-FROM node:20-alpine AS final
+FROM node:21-alpine AS final
 WORKDIR /app
 COPY --from=build /app/build build
 COPY --from=build /app/node_modules node_modules
