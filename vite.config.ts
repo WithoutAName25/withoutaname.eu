@@ -1,6 +1,7 @@
 import { sveltekit } from "@sveltejs/kit/vite"
 import autoprefixer from "autoprefixer"
 import open_props from "open-props"
+// @ts-ignore
 import postcss_jit_props from "postcss-jit-props"
 import postcssPresetEnv from "postcss-preset-env"
 import Icons from "unplugin-icons/vite"
@@ -34,7 +35,6 @@ export default defineConfig({
   test: {
     coverage: {
       all: true,
-      src: ["src"],
       reporter: ["json", "text", "text-summary"],
     },
     include: ["tests/unit/**/*.ts"],
