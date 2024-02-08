@@ -47,7 +47,7 @@ jobs:
             pnpm-${{ runner.os }}-
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           run_install: true
 
