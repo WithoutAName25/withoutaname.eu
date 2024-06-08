@@ -37,6 +37,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=raw,value=latest,enable=${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+            type=raw,value=current,enable=${{ ! inputs.push }}
             type=raw,value={{branch}}-{{sha}}-{{date 'X'}},enable=${{ github.event_name == 'push' }}
 
       - name: Login to Docker Hub
@@ -62,4 +63,4 @@ jobs:
 
       - name: Run
         if: ${{ inputs.run }}
-        run: docker run --rm ${{ inputs.tags }}
+        run: docker run --rm withoutaname/withoutaname.eu:current
