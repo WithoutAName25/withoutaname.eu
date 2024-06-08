@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [master]
   pull_request:
 
 jobs:
@@ -13,7 +12,6 @@ jobs:
       push: false
       run: false
       target: base
-      tags: withoutaname/withoutaname.eu:base
     secrets: inherit
 
   checks:
@@ -28,7 +26,6 @@ jobs:
       push: false
       run: true
       target: ${{ matrix.target }}
-      tags: withoutaname/withoutaname.eu:${{ matrix.target }}
     secrets: inherit
 
   unit:
@@ -67,40 +64,12 @@ jobs:
           flags: unit
           files: ./coverage/coverage-final.json
 
-  version:
-    name: Get current version
-    runs-on: ubuntu-latest
-    outputs:
-      value: ${{ steps.version.outputs.value }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Get current version
-        id: version
-        run: |
-          TAGS=withoutaname/withoutaname.eu:latest
-          VERSION=$(expr match "$(git tag --points-at HEAD)" '.*v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*') \
-          && TAGS="$TAGS,withoutaname/withoutaname.eu:$VERSION" \
-          || echo "No version found"
-          echo "value=$TAGS" >> $GITHUB_OUTPUT
-
   publish:
     name: Build and push final image
-    needs: [ base, checks, unit, version]
-    if: ${{ success() && github.event_name == 'push' && github.ref_name == 'master' }}
+    needs: [ base, checks, unit]
     uses: ./.github/workflows/docker.yml
     with:
       push: true
       run: false
       target: final
-      tags: ${{ needs.version.outputs.value }}
     secrets: inherit
-
-  deploy:
-    name: Deploy latest image
-    needs: publish
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        run: ${{ secrets.DEPLOY_COMMAND }}
