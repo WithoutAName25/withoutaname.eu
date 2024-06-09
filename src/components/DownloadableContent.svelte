@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { saveAs } from "file-saver"
+  import fileSaver from "file-saver"
   import DownloadIcon from "~icons/mdi/download"
 
   export let filename: string
@@ -17,7 +17,7 @@
   ) {
     let content: string = wrapper.innerHTML
     content = processContent?.(content) ?? content
-    saveAs(
+    fileSaver.saveAs(
       new Blob([content], {
         type: `${fileType};charset=utf-8`,
       }),
