@@ -42,7 +42,7 @@ export class FlipFlopHistoryData {
         }
       }
       this.pinHistories.set(pinHistories)
-      let lastClockValue = true
+      let lastClockValue: boolean | undefined = undefined
       const inputPinValuesStore = derived(
         inputPinValues,
         ($pinValues) => $pinValues,
