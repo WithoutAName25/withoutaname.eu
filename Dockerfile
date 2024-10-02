@@ -9,10 +9,10 @@ RUN pnpm install --offline
 FROM base AS dev
 COPY . .
 
-FROM dev as lint
+FROM dev AS lint
 CMD pnpm run lint
 
-FROM dev as check
+FROM dev AS check
 CMD pnpm run check
 
 FROM dev AS unittest
