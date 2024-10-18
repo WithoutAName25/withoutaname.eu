@@ -69,7 +69,7 @@ jobs:
     needs: [ base, checks, unit]
     uses: ./.github/workflows/docker.yml
     with:
-      push: true
+      push: ${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/heads/dependabot/') }}
       run: false
       target: final
     secrets: inherit
