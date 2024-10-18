@@ -56,7 +56,7 @@ importers:
         version: 8.0.0(postcss@8.4.47)
       '@vitest/coverage-v8':
         specifier: ^2.1.3
-        version: 2.1.3(vitest@2.1.3(@vitest/ui@2.1.3)(sass@1.80.2))
+        version: 2.1.3(vitest@2.1.3)
       '@vitest/ui':
         specifier: ^2.1.3
         version: 2.1.3(vitest@2.1.3)
@@ -69,6 +69,9 @@ importers:
       c8:
         specifier: ^10.1.2
         version: 10.1.2
+      cookie:
+        specifier: ^1.0.1
+        version: 1.0.1
       eslint:
         specifier: ^9.12.0
         version: 9.12.0
@@ -1206,6 +1209,10 @@ packages:
   cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
+
+  cookie@1.0.1:
+    resolution: {integrity: sha512-Xd8lFX4LM9QEEwxQpF9J9NTUh8pmdJO0cyRJhFiDoLTk2eH8FXlRv2IFGYVadZpqI3j8fhNrSdKCeYPxiAhLXw==}
+    engines: {node: '>=18'}
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -3377,7 +3384,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@vitest/coverage-v8@2.1.3(vitest@2.1.3(@vitest/ui@2.1.3)(sass@1.80.2))':
+  '@vitest/coverage-v8@2.1.3(vitest@2.1.3)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -3614,6 +3621,8 @@ snapshots:
   convert-source-map@2.0.0: {}
 
   cookie@0.6.0: {}
+
+  cookie@1.0.1: {}
 
   cross-spawn@7.0.3:
     dependencies:
