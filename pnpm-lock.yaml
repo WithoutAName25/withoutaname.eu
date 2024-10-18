@@ -1628,10 +1628,6 @@ packages:
   loupe@2.3.7:
     resolution: {integrity: sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==}
 
-  lru-cache@6.0.0:
-    resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
-    engines: {node: '>=10'}
-
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
 
@@ -2165,13 +2161,8 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  semver@6.3.0:
-    resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
-    hasBin: true
-
-  semver@7.5.4:
-    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
-    engines: {node: '>=10'}
+  semver@6.3.1:
+    resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
   semver@7.6.2:
@@ -4106,10 +4097,6 @@ snapshots:
     dependencies:
       get-func-name: 2.0.2
 
-  lru-cache@6.0.0:
-    dependencies:
-      yallist: 4.0.0
-
   magic-string@0.30.10:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -4126,11 +4113,11 @@ snapshots:
 
   make-dir@3.1.0:
     dependencies:
-      semver: 6.3.0
+      semver: 6.3.1
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.5.4
+      semver: 7.6.2
 
   mdn-data@2.0.30: {}
 
@@ -4673,11 +4660,7 @@ snapshots:
       immutable: 4.2.4
       source-map-js: 1.2.0
 
-  semver@6.3.0: {}
-
-  semver@7.5.4:
-    dependencies:
-      lru-cache: 6.0.0
+  semver@6.3.1: {}
 
   semver@7.6.2: {}
 
