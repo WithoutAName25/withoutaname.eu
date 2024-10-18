@@ -70,13 +70,15 @@
       right: 0;
       height: 100vh;
       width: 25rem;
-      @media (max-width: 30rem) {
-        width: 100vw;
-      }
       background-color: #0008;
       overflow-y: scroll;
       transform: translateX(100%);
       transition: transform 0.5s;
+
+      @media (max-width: 30rem) {
+        width: 100vw;
+      }
+      
       &.expanded {
         transform: translateX(0%);
       }

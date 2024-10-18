@@ -4,11 +4,10 @@
 !src
 !static
 !tests
-!.eslintignore
-!.eslintrc.cjs
 !.npmrc
 !.prettierignore
 !.prettierrc
+!eslint.config.js
 !package.json
 !playwright.config.ts
 !pnpm-lock.yaml
