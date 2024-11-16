@@ -59,7 +59,7 @@ jobs:
         run: pnpm run test:unit:ci
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           flags: unit
           files: ./coverage/coverage-final.json
