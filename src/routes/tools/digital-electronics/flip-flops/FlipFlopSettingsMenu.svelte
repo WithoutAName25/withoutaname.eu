@@ -26,7 +26,7 @@
   <div>
     Flip-flop type:
     <ul>
-      {#each Object.values(FlipFlopType) as type}
+      {#each Object.values(FlipFlopType) as type (type)}
         <li>
           <label>
             <input type="radio" value={type} bind:group={$flipFlopType} />
@@ -39,7 +39,7 @@
   <div>
     Clock control:
     <ul>
-      {#each Object.values(ClockControl) as type}
+      {#each Object.values(ClockControl) as type (type)}
         <li
           class:disabled={type !== ClockControl.EDGE &&
             type !== ClockControl.DUAL_EDGE &&

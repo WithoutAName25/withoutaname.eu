@@ -13,6 +13,8 @@
   $: edgeControlSymbol = edgeControlled && pin.name === "C"
   $: masterSlaveSymbol = dualControlled && pin.name[0] === "Q"
 
+  // TODO: find a better way to do this
+  // eslint-disable-next-line svelte/no-reactive-functions
   $: getX = (offsetX: number, offsetY: number) => {
     switch (pos) {
       case "left":
@@ -25,6 +27,8 @@
         return x - offsetY
     }
   }
+  // TODO: find a better way to do this
+  // eslint-disable-next-line svelte/no-reactive-functions
   $: getY = (offsetX: number, offsetY: number) => {
     switch (pos) {
       case "left":

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade } from "svelte/transition"
-  import type { NavElementData } from "./navigation"
   import NavElement from "./NavElement.svelte"
+  import type { NavElementData } from "./navigation"
 
   export let data: NavElementData[]
   export let depth: number
@@ -17,7 +17,7 @@
     class:noInline={!inline}
     class:hide={inline && !visible}
   >
-    {#each data as elementData}
+    {#each data as elementData (elementData.name)}
       <NavElement data={elementData} {depth} {mobile} />
     {/each}
   </ul>

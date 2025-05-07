@@ -12,6 +12,8 @@
   export let dualControlled: boolean
   export let edgeControlled: boolean
 
+  // TODO: find a better way to do this
+  // eslint-disable-next-line svelte/no-reactive-functions
   $: posX = (i: number) => {
     switch (pos) {
       case "left":
@@ -23,6 +25,8 @@
         return x + width * ((i + 1) / ($pins.length + 1))
     }
   }
+  // TODO: find a better way to do this
+  // eslint-disable-next-line svelte/no-reactive-functions
   $: posY = (i: number) => {
     switch (pos) {
       case "left":

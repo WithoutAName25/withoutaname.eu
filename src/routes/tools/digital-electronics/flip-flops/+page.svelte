@@ -12,11 +12,13 @@
   const showHistory = settings.history.show
 
   const downloads: Array<{
+    id: number
     label?: string
     fileType: string
     processContent?: (content: string) => string
   }> = [
     {
+      id: 0,
       label: "Download (dark)",
       fileType: "image/svg+xml",
       processContent: (content) =>
@@ -26,6 +28,7 @@
           .replaceAll('data-color-stroke-low-contrast=""', 'stroke="#bbb"'),
     },
     {
+      id: 1,
       label: "Download (light)",
       fileType: "image/svg+xml",
       processContent: (content) =>

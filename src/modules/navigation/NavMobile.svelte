@@ -26,7 +26,7 @@
   </div>
   <div class="wrapper" class:expanded>
     <ul>
-      {#each data.elements as elementData}
+      {#each data.elements as elementData (elementData.name)}
         <NavElement data={elementData} mobile={true} depth={0} />
       {/each}
     </ul>
@@ -78,7 +78,7 @@
       @media (max-width: 30rem) {
         width: 100vw;
       }
-      
+
       &.expanded {
         transform: translateX(0%);
       }

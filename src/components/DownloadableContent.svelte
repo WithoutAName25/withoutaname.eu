@@ -4,10 +4,11 @@
 
   export let filename: string
   export let downloads: {
+    id: number
     label?: string
     fileType: string
     processContent?: (content: string) => string
-  }[] = [{ fileType: "text/plain" }]
+  }[] = [{ id: 0, fileType: "text/plain" }]
 
   let wrapper: HTMLDivElement
 
@@ -31,7 +32,7 @@
     <slot />
   </div>
   <div class="downloads">
-    {#each downloads as download}
+    {#each downloads as download (download.id)}
       <button
         class="download"
         on:click={() => save(download.fileType, download.processContent)}

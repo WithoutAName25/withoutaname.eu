@@ -1,8 +1,5 @@
 <script lang="ts">
-  import type {
-    FlipFlopHistoryData,
-    PinHistoryData,
-  } from "./flip-flop-history-data"
+  import type { FlipFlopHistoryData, PinHistoryData } from "./flip-flop-history-data"
   import FlipFlopPinHistory from "./FlipFlopPinHistory.svelte"
 
   export let history: FlipFlopHistoryData
@@ -60,7 +57,7 @@
     fill="url(#grid)"
     stroke="none"
   />
-  {#each visiblePinHistories as pinHistoryData, i}
+  {#each visiblePinHistories as pinHistoryData, i (pinHistoryData.name)}
     <FlipFlopPinHistory
       x={0}
       y={rowHeight * (i + 0.5)}

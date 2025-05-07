@@ -22,7 +22,7 @@
   font-size="10"
   aria-label="Flip-flop display"
 >
-  {#each [...flipFlop.pins] as [pos, pins]}
+  {#each [...flipFlop.pins] as [pos, pins] (pos)}
     <FlipFlopPinsOfPosDisplay
       {pins}
       {pos}

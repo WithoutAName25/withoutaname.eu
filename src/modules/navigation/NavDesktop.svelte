@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { navigationData } from "./navigation"
-  import type { NavigationData } from "./navigation"
   import NavElement from "./NavElement.svelte"
+  import type { NavigationData } from "./navigation"
+  import { navigationData } from "./navigation"
 
   export let data: NavigationData = navigationData
 </script>
 
 <nav>
   <ul>
-    {#each data.elements as elementData}
+    {#each data.elements as elementData (elementData.name)}
       <NavElement data={elementData} mobile={false} depth={0} />
     {/each}
   </ul>
