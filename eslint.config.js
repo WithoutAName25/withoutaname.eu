@@ -28,6 +28,7 @@ export default tseslint.config(
     },
     rules: {
       "svelte/valid-compile": "warn",
+      "svelte/no-navigation-without-resolve": "warn",
     },
   },
   {

@@ -33,7 +33,7 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      all: true,
+      include: ["src/**/*.ts"],
       reporter: ["json", "text", "text-summary"],
     },
     include: ["tests/unit/**/*.ts"],
