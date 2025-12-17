@@ -1,9 +1,7 @@
 name: CI
-
 on:
   push:
   pull_request:
-
 jobs:
   base:
     name: Build base image
@@ -13,7 +11,6 @@ jobs:
       run: false
       target: base
     secrets: inherit
-
   checks:
     strategy:
       fail-fast: false
@@ -27,14 +24,12 @@ jobs:
       run: true
       target: ${{ matrix.target }}
     secrets: inherit
-
   unit:
     name: Test and upload coverage
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
       - name: Cache pnpm modules
         uses: actions/cache@v5
         with:
@@ -42,31 +37,25 @@ jobs:
           key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             pnpm-${{ runner.os }}-
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: true
-          version: latest
-
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 19.x
+          node-version: 25.x
           registry-url: https://registry.npmjs.org/
-
       - name: Test
         run: pnpm run test:unit:ci
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           flags: unit
           files: ./coverage/coverage-final.json
-
   publish:
     name: Build and push final image
-    needs: [ base, checks, unit]
+    needs: [base, checks, unit]
     uses: ./.github/workflows/docker.yml
     with:
       push: ${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/heads/dependabot/') }}
