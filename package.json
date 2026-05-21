@@ -33,7 +33,7 @@
     "@playwright/test": "^1.59.1",
     "@sveltejs/adapter-node": "^5.5.4",
     "@sveltejs/adapter-vercel": "^6.3.3",
-    "@sveltejs/kit": "^2.59.0",
+    "@sveltejs/kit": "^2.60.1",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@types/file-saver": "^2.0.7",
     "@types/nprogress": "^0.2.3",
