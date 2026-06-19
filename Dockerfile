@@ -1,9 +1,8 @@
 FROM node:26 AS base
 WORKDIR /app
-RUN npm install -g pnpm
-COPY pnpm-lock.yaml ./
+COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN npm install -g pnpm@$(node -p "require('./package.json').packageManager.split('@')[1]")
 RUN pnpm fetch
-COPY .npmrc package.json ./
 RUN pnpm install --offline
 
 FROM base AS dev
