@@ -1,6 +1,6 @@
-ignoredBuiltDependencies:
-  - "@parcel/watcher"
+minimumReleaseAge: 4320
 
-onlyBuiltDependencies:
-  - esbuild
-  - svelte-preprocess
+allowBuilds:
+  "@parcel/watcher": true
+  esbuild: true
+  svelte-preprocess: true
