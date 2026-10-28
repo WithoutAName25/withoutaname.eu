@@ -1,32 +1,33 @@
 <script lang="ts">
-  import { browser } from "$app/environment"
-  import { afterNavigate, beforeNavigate } from "$app/navigation"
-  import NProgress from "nprogress"
-  import Header from "../components/Header.svelte"
-  import "../css/main.pcss"
+  import { browser } from '$app/env';
+  import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import NProgress from "nprogress";
+  import Header from "../components/Header.svelte";
+  import "../css/main.pcss";
 
   let preferredColorScheme = "dark"
 
   if (browser) {
-    beforeNavigate(() => {
-      NProgress.start()
-    })
-    afterNavigate(() => {
-      NProgress.done()
-    })
+    beforeNavigate(({ shallow, type }) => {
+      if (shallow && type === 'goto') return;
 
-    preferredColorScheme = matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light"
+      NProgress.start();
+    });
+
+    afterNavigate(({ shallow, type }) => {
+      if (shallow && type === 'goto') return;
+
+      NProgress.done();
+    });
+
+    preferredColorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 </script>
 
-<div class="wrapper" data-color-scheme={preferredColorScheme}>
-  <Header />
-  <main>
-    <slot />
-  </main>
-</div>
+<div
+  class="wrapper"
+  data-color-scheme={preferredColorScheme}
+><Header /><main><slot></slot></main></div>
 
 <style lang="scss">
   .wrapper {

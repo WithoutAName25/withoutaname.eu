@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navigating, page } from "$app/stores"
+  import { navigating, page } from "$app/state"
   import ExternalIcon from "~icons/lucide/external-link"
   import DropdownIcon from "~icons/mdi/menu-down"
   import { onClickOrEnterOutside } from "../../scripts/onClickOutside"
@@ -7,40 +7,47 @@
   import type { NavElementData } from "./navigation"
   import { NavGroupData } from "./navigation"
 
-  export let data: NavElementData
-  export let depth: number
-  export let mobile: boolean
+  let {
+    data,
+    depth,
+    mobile,
+  }: { data: NavElementData; depth: number; mobile: boolean } = $props()
 
-  const subElements = data instanceof NavGroupData ? data.elements : undefined
-  $: activeExact = $page.url.pathname === data.url
-  $: active =
+  const subElements = $derived(
+    data instanceof NavGroupData ? data.elements : undefined,
+  )
+  const activeExact = $derived(page.url.pathname === data.url)
+  const active = $derived(
     data instanceof NavGroupData
-      ? $page.url.pathname.startsWith(data.baseUrl)
-      : activeExact
+      ? page.url.pathname.startsWith(data.baseUrl)
+      : activeExact,
+  )
 
-  let hover = false
-  let clicked = false
-  $: if ($navigating?.from?.url !== $navigating?.to?.url) clicked = false
+  let hover = $state(false)
+  let clicked = $state(false)
+  $effect(() => {
+    if (navigating.from?.url !== navigating.to?.url) clicked = false
+  })
 
-  $: inline = mobile || depth > 0
-  $: showDropdown = clicked || (hover && !inline)
+  const inline = $derived(mobile || depth > 0)
+  const showDropdown = $derived(clicked || (hover && !inline))
 </script>
 
 <svelte:body
-  on:keydown={(event) => {
+  onkeydown={(event) => {
     if (event.key === "Escape") clicked = false
   }}
 />
 <li
-  on:mouseenter={() => (hover = true)}
-  on:mouseleave={() => (hover = false)}
+  onmouseenter={() => (hover = true)}
+  onmouseleave={() => (hover = false)}
   use:onClickOrEnterOutside={() => (clicked = false)}
 >
   <a
     href={data.url}
     class:active={activeExact || (active && !showDropdown)}
-    on:click={() => (clicked = !clicked)}
-    on:keydown={(event) => {
+    onclick={() => (clicked = !clicked)}
+    onkeydown={(event) => {
       if (event.key === "Enter") clicked = !clicked
     }}
     tabindex="0"

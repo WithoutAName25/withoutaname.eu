@@ -33,6 +33,16 @@ export default defineConfig(
     },
   },
   {
+    // eslint-plugin-svelte@3.23.1 crashes on ESLint 10 when this rule reports
+    // (uses the removed sourceCode.isSpaceBetweenTokens), even for disabled lines
+    files: [
+      "src/routes/tools/digital-electronics/flip-flops/display/FlipFlopPin{,sOfPos}Display.svelte",
+    ],
+    rules: {
+      "svelte/no-reactive-functions": "off",
+    },
+  },
+  {
     files: ["static/sw.js"],
     languageOptions: {
       globals: {

@@ -1,29 +1,32 @@
 <script lang="ts">
-  import { navigating } from "$app/stores"
+  import { navigating } from "$app/state"
   import NavElement from "./NavElement.svelte"
   import type { NavigationData } from "./navigation"
   import { navigationData } from "./navigation"
 
-  export let data: NavigationData = navigationData
+  let { data = navigationData }: { data?: NavigationData } = $props()
 
-  let expanded = false
-  $: if ($navigating?.from?.url !== $navigating?.to?.url) expanded = false
+  let expanded = $state(false)
+  $effect(() => {
+    if (navigating.from?.url !== navigating.to?.url) expanded = false
+  })
 </script>
 
 <nav>
   <div
     class="icon"
     class:expanded
-    on:click={() => (expanded = !expanded)}
-    on:keydown={(event) => {
+    onclick={() => (expanded = !expanded)}
+    onkeydown={(event) => {
       if (event.key === "Enter") expanded = !expanded
     }}
     tabindex="0"
   >
-    <div />
-    <div />
-    <div />
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
+
   <div class="wrapper" class:expanded>
     <ul>
       {#each data.elements as elementData (elementData.name)}

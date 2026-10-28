@@ -13,7 +13,6 @@
   export let edgeControlled: boolean
 
   // TODO: find a better way to do this
-  // eslint-disable-next-line svelte/no-reactive-functions
   $: posX = (i: number) => {
     switch (pos) {
       case "left":
@@ -26,7 +25,6 @@
     }
   }
   // TODO: find a better way to do this
-  // eslint-disable-next-line svelte/no-reactive-functions
   $: posY = (i: number) => {
     switch (pos) {
       case "left":

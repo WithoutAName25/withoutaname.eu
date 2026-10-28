@@ -1,3 +1,7 @@
+/// <reference types="node" />
+import adapterNode from "@sveltejs/adapter-node"
+import vercel from "@sveltejs/adapter-vercel"
+import preprocess from "svelte-preprocess"
 import { sveltekit } from "@sveltejs/kit/vite"
 import autoprefixer from "autoprefixer"
 import open_props from "open-props"
@@ -8,7 +12,13 @@ import { defineConfig } from "vitest/config"
 
 export default defineConfig({
   plugins: [
-    sveltekit(),
+    sveltekit({
+      // Consult https://github.com/sveltejs/svelte-preprocess
+      // for more information about preprocessors
+      preprocess: preprocess(),
+      adapter: process.env.VERCEL === "true" ? vercel() : adapterNode(),
+    }),
+
     Icons({
       autoInstall: true,
       compiler: "svelte",
